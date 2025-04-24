@@ -1,29 +1,25 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native';
+import HeroSection from './components/HeroSection';
 
-export default function App() {
-    return (
-        <View style={styles.container}>
-            <Text style={styles.header}>Welcome to Beart Photography</Text>
-            <Text style={styles.description}>Capturing the world one shot at a time.</Text>
-        </View>
-    );
-}
+
+
+const App = () => (
+    <View style={styles.container}>
+        <HeroSection />
+        <Text>Hello</Text>
+    </View>
+
+
+);
+console.log('App loaded'); // Check the browser console
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        backgroundColor: '#f5f5f5',
-    },
-    header: {
-        fontSize: 32,
-        fontWeight: 'bold',
-    },
-    description: {
-        fontSize: 18,
-        color: '#555',
+        paddingTop: 40,
     },
 });
+
+export default App;
