@@ -20,6 +20,11 @@ module.exports = {
                 exclude: /node_modules/,
                 use: 'babel-loader',
             },
+            // Add a rule for loading SVG files as URL
+            {
+                test: /\.svg$/,
+                use: ['file-loader'],
+            },
         ],
     },
     plugins: [
@@ -28,7 +33,10 @@ module.exports = {
         }),
     ],
     devServer: {
-        static: './dist',
+        static: [
+            path.join(__dirname, 'dist'),
+            path.join(__dirname, 'public'), // Serve static files from the public folder
+        ],
         port: 3000,
     },
 };

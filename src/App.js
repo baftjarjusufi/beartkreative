@@ -1,25 +1,41 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native';
-import HeroSection from './components/HeroSection';
+import {Dimensions, ScrollView, StatusBar, StyleSheet} from 'react-native';
+
+import Navbar from "./components/Navbar";// Import BlackBackground
+import {View, SafeAreaView} from 'react-native';
 
 
 
-const App = () => (
-    <View style={styles.container}>
-        <HeroSection />
-        <Text>Hello</Text>
-    </View>
+const {width,height} = Dimensions.get("window");
 
 
-);
-console.log('App loaded'); // Check the browser console
+const App = () => {
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 40,
-    },
-});
+
+    const styles = StyleSheet.create({
+        container: {
+            minHeight: "100vh"
+            // backgroundColor:"black"
+
+
+
+        },
+    });
+
+
+    return (
+
+        <ScrollView contentContainerStyle={styles.container}>
+
+            <SafeAreaView style={{height: "100%",width:"100%", backgroundColor:"orange"}}> AAAAAAAAAAAAAAAAAAAAAAA</SafeAreaView>
+
+
+        </ScrollView>
+
+    );
+
+
+
+};
 
 export default App;
