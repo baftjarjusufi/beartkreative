@@ -31,7 +31,7 @@ const App = () => {
 
     const cardData = {
         wedding: {
-            title: "Wedding Stories",
+            title: "Wedding Stories at us",
             mainText: "Capturing your special moments with elegance and authenticity. Each wedding tells a unique story, and we're here to preserve those precious memories for generations to come.",
             detailText: "Our wedding photography packages include full-day coverage, a second photographer, high-resolution digital files, and a beautiful online gallery. We focus on both candid moments and artistic portraits to tell your complete wedding story. ✨💑"
         },
