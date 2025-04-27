@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Dimensions, ScrollView, StatusBar, StyleSheet} from 'react-native';
 import { Text } from 'react-native';
 
@@ -27,6 +27,26 @@ const {width,height} = Dimensions.get("window");
 
 
 const App = () => {
+    const [activeCard, setActiveCard] = useState(null);
+
+    const cardData = {
+        wedding: {
+            title: "Wedding Stories",
+            mainText: "Capturing your special moments with elegance and authenticity. Each wedding tells a unique story, and we're here to preserve those precious memories for generations to come.",
+            detailText: "Our wedding photography packages include full-day coverage, a second photographer, high-resolution digital files, and a beautiful online gallery. We focus on both candid moments and artistic portraits to tell your complete wedding story. ✨💑"
+        },
+        engagement: {
+            title: "Engagement Sessions",
+            mainText: "Beautiful pre-wedding photoshoots that celebrate your love story. Perfect for save-the-dates and wedding invitations, set in stunning locations across the region.",
+            detailText: "Two-hour engagement sessions at your chosen location. Includes outfit changes, location suggestions, professional editing, and a mix of posed and natural shots. Perfect for announcements and wedding websites! 💍✨"
+        },
+        premium: {
+            title: "Premium Packages",
+            mainText: "From intimate ceremonies to grand celebrations, our customizable packages include full-day coverage, engagement sessions, luxury albums, and high-resolution digital files.",
+            detailText: "Our premium service includes unlimited coverage hours, drone photography, same-day photo previews, luxury leather album, and all digital files with full printing rights. The ultimate wedding photography experience! 📸💝"
+        }
+    };
+
     const styles = StyleSheet.create({
         container: {
             minHeight: "100vh",
@@ -50,10 +70,10 @@ const App = () => {
             padding: width > 768 ? 40 : 20,
             flexDirection: width > 768 ? 'row' : 'column',
             flexWrap: width > 768 ? 'wrap' : 'nowrap',
-            justifyContent: 'space-around',
+            justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: 'transparent',
-            gap: width > 768 ? 50 : 60,
+            gap: width > 768 ? 50 : 40,
             paddingVertical: width > 768 ? 100 : 80,
             position: 'relative',
             zIndex: 1,
@@ -71,44 +91,71 @@ const App = () => {
             zIndex: -1,
         },
         card: {
-            backgroundColor: '#f5f5f5',
-            borderRadius: width > 768 ? 30 : 30,
-            padding: width > 768 ? 50 : 45,
-            margin: width > 768 ? 0 : 20,
-            width: width > 768 ? 450 : '95%',
+            backgroundColor: '#ffffff',
+            borderRadius: 10,
+            padding: width > 768 ? 30 : 20,
+            margin: width > 768 ? 10 : 15,
+            width: width > 768 ? 450 : '90%',
             minHeight: width > 768 ? 500 : 400,
-            borderWidth: 1,
-            borderColor: 'rgba(255, 255, 255, 0.1)',
             shadowColor: '#000',
             shadowOffset: {
                 width: 0,
-                height: 15,
+                height: 2,
             },
-            shadowOpacity: 0.5,
-            shadowRadius: 30,
-            elevation: 20,
-            transform: [{scale: 1}],
-            transition: 'all 0.3s ease',
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+            elevation: 5,
             cursor: 'pointer',
-            ':hover': {
-                transform: [{scale: 1.05}],
-                backgroundColor: '#ffffff',
-            }
+            transition: 'all 0.4s ease-in-out',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignSelf: 'center',
+        },
+        activeCard: {
+            backgroundColor: '#2c2c2c',
+            transform: [{scale: 1.03}],
+            shadowColor: '#000',
+            shadowOffset: {
+                width: 0,
+                height: 4,
+            },
+            shadowOpacity: 0.3,
+            shadowRadius: 5,
+            elevation: 8,
         },
         cardTitle: {
-            fontSize: width > 768 ? 32 : 36,
+            fontSize: width > 768 ? 32 : 32,
             fontWeight: '700',
-            marginBottom: width > 768 ? 25 : 30,
+            marginBottom: width > 768 ? 25 : 20,
             color: '#333333',
             letterSpacing: 0.5,
-            textAlign: width > 768 ? 'left' : 'center',
+            textAlign: 'center',
+            width: '100%',
+            transition: 'color 0.4s ease-in-out',
         },
         cardText: {
             fontSize: width > 768 ? 20 : 24,
             color: '#666666',
             lineHeight: width > 768 ? 32 : 36,
             letterSpacing: 0.3,
-            textAlign: width > 768 ? 'left' : 'center',
+            textAlign: 'center',
+            transition: 'all 0.4s ease-in-out',
+            paddingHorizontal: width > 768 ? 0 : 10,
+            width: '100%',
+            maxWidth: '90%',
+        },
+        activeCardTitle: {
+            color: '#ffffff',
+            fontSize: width > 768 ? 32 : 36,
+            textAlign: 'center',
+        },
+        activeCardText: {
+            color: '#e0e0e0',
+            fontSize: width > 768 ? 20 : 28,
+            lineHeight: width > 768 ? 32 : 40,
+            textAlign: 'center',
+            maxWidth: '90%',
         },
         regularText: {
             fontSize: 16,
@@ -234,24 +281,60 @@ const App = () => {
 
             <View style={styles.cardContainer}>
                 <View style={styles.cardBackground} />
-                <View style={styles.card}>
-                    <Text style={styles.cardTitle}>Wedding Stories</Text>
-                    <Text style={styles.cardText}>
-                        Capturing your special moments with elegance and authenticity. Each wedding tells a unique story, and we're here to preserve those precious memories for generations to come.
+                <View 
+                    style={[
+                        styles.card, 
+                        activeCard === 'wedding' && styles.activeCard
+                    ]}
+                    onClick={() => setActiveCard(activeCard === 'wedding' ? null : 'wedding')}
+                >
+                    <Text style={[
+                        styles.cardTitle,
+                        activeCard === 'wedding' && styles.activeCardTitle
+                    ]}>{cardData.wedding.title}</Text>
+                    <Text style={[
+                        styles.cardText,
+                        activeCard === 'wedding' && styles.activeCardText
+                    ]}>
+                        {activeCard === 'wedding' ? cardData.wedding.detailText : cardData.wedding.mainText}
                     </Text>
                 </View>
 
-                <View style={styles.card}>
-                    <Text style={styles.cardTitle}>Engagement Sessions</Text>
-                    <Text style={styles.cardText}>
-                        Beautiful pre-wedding photoshoots that celebrate your love story. Perfect for save-the-dates and wedding invitations, set in stunning locations across the region.
+                <View 
+                    style={[
+                        styles.card, 
+                        activeCard === 'engagement' && styles.activeCard
+                    ]}
+                    onClick={() => setActiveCard(activeCard === 'engagement' ? null : 'engagement')}
+                >
+                    <Text style={[
+                        styles.cardTitle,
+                        activeCard === 'engagement' && styles.activeCardTitle
+                    ]}>{cardData.engagement.title}</Text>
+                    <Text style={[
+                        styles.cardText,
+                        activeCard === 'engagement' && styles.activeCardText
+                    ]}>
+                        {activeCard === 'engagement' ? cardData.engagement.detailText : cardData.engagement.mainText}
                     </Text>
                 </View>
 
-                <View style={styles.card}>
-                    <Text style={styles.cardTitle}>Premium Packages</Text>
-                    <Text style={styles.cardText}>
-                        From intimate ceremonies to grand celebrations, our customizable packages include full-day coverage, engagement sessions, luxury albums, and high-resolution digital files.
+                <View 
+                    style={[
+                        styles.card, 
+                        activeCard === 'premium' && styles.activeCard
+                    ]}
+                    onClick={() => setActiveCard(activeCard === 'premium' ? null : 'premium')}
+                >
+                    <Text style={[
+                        styles.cardTitle,
+                        activeCard === 'premium' && styles.activeCardTitle
+                    ]}>{cardData.premium.title}</Text>
+                    <Text style={[
+                        styles.cardText,
+                        activeCard === 'premium' && styles.activeCardText
+                    ]}>
+                        {activeCard === 'premium' ? cardData.premium.detailText : cardData.premium.mainText}
                     </Text>
                 </View>
             </View>
