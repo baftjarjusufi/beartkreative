@@ -123,39 +123,81 @@ const App = () => {
             padding: width > 768 ? 100 : 40,
             backgroundColor: 'transparent',
             position: 'relative',
+            marginVertical: 100,
+        },
+        testimonialWrapper: {
+            backgroundColor: '#ffffff',
+            borderRadius: 50,
+            padding: width > 768 ? 80 : 40,
+            margin: width > 768 ? 40 : 20,
+            shadowColor: '#000',
+            shadowOffset: {
+                width: 0,
+                height: 20,
+            },
+            shadowOpacity: 0.2,
+            shadowRadius: 40,
+            elevation: 20,
         },
         sectionTitle: {
-            fontSize: width > 768 ? 36 : 28,
-            color: '#ffffff',
+            fontSize: width > 768 ? 48 : 36,
+            color: '#333333',
             textAlign: 'center',
-            marginBottom: 40,
+            marginBottom: width > 768 ? 60 : 80,
             fontWeight: '700',
-            letterSpacing: 1,
+            letterSpacing: 1.2,
         },
-        testimonialContainer: {
-            maxWidth: 800,
-            marginHorizontal: 'auto',
-            padding: 20,
+        testimonialScrollContainer: {
+            paddingHorizontal: width > 768 ? 80 : 40,
+            paddingBottom: 40,
+            gap: width > 768 ? 60 : 40,
         },
         testimonial: {
-            backgroundColor: 'rgba(255, 255, 255, 0.05)',
-            borderRadius: 20,
-            padding: 30,
-            backdropFilter: 'blur(10px)',
+            backgroundColor: '#2a2a2a',
+            borderRadius: 40,
+            padding: width > 768 ? 60 : 45,
+            width: width > 768 ? '70vw' : '75vw',
+            marginRight: width > 768 ? 60 : 40,
+            borderWidth: 1,
+            borderColor: 'rgba(255, 255, 255, 0.1)',
+            minHeight: width > 768 ? 400 : 825,
+            height: width > 768 ? 'auto' : 825,
+            shadowColor: '#000',
+            shadowOffset: {
+                width: 0,
+                height: 15,
+            },
+            shadowOpacity: 0.3,
+            shadowRadius: 30,
+            elevation: 15,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
         },
         testimonialText: {
-            fontSize: width > 768 ? 24 : 20,
+            fontSize: width > 768 ? 28 : 24,
             color: '#ffffff',
             fontStyle: 'italic',
-            lineHeight: 36,
+            lineHeight: width > 768 ? 46 : 38,
             textAlign: 'center',
-            marginBottom: 20,
+            marginBottom: width > 768 ? 60 : 50,
+            letterSpacing: 0.8,
+            maxWidth: width > 768 ? '85%' : '90%',
+            alignSelf: 'center',
         },
         testimonialAuthor: {
-            fontSize: width > 768 ? 18 : 16,
+            fontSize: width > 768 ? 24 : 18,
             color: '#ffffff',
             textAlign: 'center',
             fontWeight: '600',
+            marginBottom: width > 768 ? 12 : 8,
+            letterSpacing: 1,
+        },
+        testimonialDate: {
+            fontSize: width > 768 ? 18 : 14,
+            color: 'rgba(255, 255, 255, 0.7)',
+            textAlign: 'center',
+            letterSpacing: 0.5,
         },
         statsSection: {
             flexDirection: width > 768 ? 'row' : 'column',
@@ -215,14 +257,53 @@ const App = () => {
             </View>
 
             <View style={styles.testimonialSection}>
-                <Text style={styles.sectionTitle}>Client Love Stories</Text>
-                <View style={styles.testimonialContainer}>
-                    <View style={styles.testimonial}>
-                        <Text style={styles.testimonialText}>
-                            "Our wedding photos are absolutely breathtaking. Every time we look at them, we relive those magical moments all over again."
-                        </Text>
-                        <Text style={styles.testimonialAuthor}>- Sarah & James</Text>
-                    </View>
+                <View style={styles.testimonialWrapper}>
+                    <Text style={styles.sectionTitle}>Client Love Stories</Text>
+                    <ScrollView 
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={styles.testimonialScrollContainer}
+                    >
+                        <View style={styles.testimonial}>
+                            <Text style={styles.testimonialText}>
+                                "Our wedding photos are absolutely breathtaking ✨ Every time we look at them, we relive those magical moments all over again. The attention to detail and the way they captured our emotions was perfect! 💝"
+                            </Text>
+                            <Text style={styles.testimonialAuthor}>- Sarah & James ❤️</Text>
+                            <Text style={styles.testimonialDate}>Summer Wedding 2023 🌞</Text>
+                        </View>
+
+                        <View style={styles.testimonial}>
+                            <Text style={styles.testimonialText}>
+                                "The engagement shoot was such a fun experience! 🌟 They made us feel so comfortable and natural. The photos turned out amazing and perfectly captured our love story 💑"
+                            </Text>
+                            <Text style={styles.testimonialAuthor}>- Emily & Michael 💕</Text>
+                            <Text style={styles.testimonialDate}>Beach Engagement 🌊</Text>
+                        </View>
+
+                        <View style={styles.testimonial}>
+                            <Text style={styles.testimonialText}>
+                                "We couldn't be happier with our choice of photographer ✨ They went above and beyond to capture every special moment of our destination wedding. True professionals! 💫"
+                            </Text>
+                            <Text style={styles.testimonialAuthor}>- Sofia & Alexander 💝</Text>
+                            <Text style={styles.testimonialDate}>Destination Wedding in Italy 🌺</Text>
+                        </View>
+
+                        <View style={styles.testimonial}>
+                            <Text style={styles.testimonialText}>
+                                "The way they captured the candid moments between us and our guests was incredible ✨ Looking through our album brings tears of joy every time 💖"
+                            </Text>
+                            <Text style={styles.testimonialAuthor}>- Rachel & Thomas 💕</Text>
+                            <Text style={styles.testimonialDate}>Spring Garden Wedding 🌸</Text>
+                        </View>
+
+                        <View style={styles.testimonial}>
+                            <Text style={styles.testimonialText}>
+                                "Not only are they talented photographers, but they're also amazing people to work with ✨ They made our elopement feel so special and intimate 💫"
+                            </Text>
+                            <Text style={styles.testimonialAuthor}>- Laura & David 💝</Text>
+                            <Text style={styles.testimonialDate}>Mountain Elopement 🏔️</Text>
+                        </View>
+                    </ScrollView>
                 </View>
             </View>
 
