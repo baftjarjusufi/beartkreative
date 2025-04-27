@@ -11,7 +11,7 @@ const Navbar = () => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.navbar}>
+            <View style={[styles.navbar, isMobile && styles.navbarMobile]}>
                 {/* Logo */}
                 <Text style={[styles.logo, isMobile && styles.logoMobile]}>Beart</Text>
 
@@ -44,13 +44,18 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#333',
     },
+    navbarMobile: {
+        height: 120,
+        paddingHorizontal: 15,
+        paddingVertical: 15,
+    },
     logo: {
         color: '#fff',
         fontSize: 24,
         fontWeight: 'bold',
     },
     logoMobile: {
-        fontSize: 20,
+        fontSize: 36,
     },
     navLinks: {
         flexDirection: 'row',
@@ -65,9 +70,10 @@ const styles = StyleSheet.create({
         letterSpacing: 1,
     },
     navItemMobile: {
-        fontSize: 12,
-        paddingHorizontal: 8,
+        fontSize: 28,
+        paddingHorizontal: 16,
         letterSpacing: 0.5,
+        fontWeight: '600',
     },
 });
 
