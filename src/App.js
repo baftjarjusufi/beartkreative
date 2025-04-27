@@ -111,6 +111,33 @@ const App = () => {
             justifyContent: 'center',
             alignItems: 'center',
             alignSelf: 'center',
+            position: 'relative',
+        },
+        cardArrow: {
+            position: 'absolute',
+            top: 20,
+            right: 20,
+            fontSize: width > 768 ? 42 : 48,
+            opacity: 0.6,
+            transform: [{rotate: '45deg'}],
+            transition: 'all 0.4s ease-in-out',
+            zIndex: 2,
+            flexDirection: 'row',
+            alignItems: 'center',
+        },
+        clickMeText: {
+            position: 'absolute',
+            top: 35,
+            right: 90,
+            fontSize: width > 768 ? 16 : 18,
+            color: '#666666',
+            fontStyle: 'italic',
+            opacity: 0.8,
+            transition: 'all 0.4s ease-in-out',
+        },
+        activeCardArrow: {
+            transform: [{rotate: '225deg'}],
+            opacity: 1,
         },
         activeCard: {
             backgroundColor: '#2c2c2c',
@@ -289,6 +316,14 @@ const App = () => {
                     onClick={() => setActiveCard(activeCard === 'wedding' ? null : 'wedding')}
                 >
                     <Text style={[
+                        styles.cardArrow,
+                        activeCard === 'wedding' && styles.activeCardArrow
+                    ]}>↗️</Text>
+                    <Text style={[
+                        styles.clickMeText,
+                        activeCard === 'wedding' && styles.activeClickMeText
+                    ]}>click me</Text>
+                    <Text style={[
                         styles.cardTitle,
                         activeCard === 'wedding' && styles.activeCardTitle
                     ]}>{cardData.wedding.title}</Text>
@@ -308,6 +343,14 @@ const App = () => {
                     onClick={() => setActiveCard(activeCard === 'engagement' ? null : 'engagement')}
                 >
                     <Text style={[
+                        styles.cardArrow,
+                        activeCard === 'engagement' && styles.activeCardArrow
+                    ]}>↗️</Text>
+                    <Text style={[
+                        styles.clickMeText,
+                        activeCard === 'engagement' && styles.activeClickMeText
+                    ]}>click me</Text>
+                    <Text style={[
                         styles.cardTitle,
                         activeCard === 'engagement' && styles.activeCardTitle
                     ]}>{cardData.engagement.title}</Text>
@@ -326,6 +369,14 @@ const App = () => {
                     ]}
                     onClick={() => setActiveCard(activeCard === 'premium' ? null : 'premium')}
                 >
+                    <Text style={[
+                        styles.cardArrow,
+                        activeCard === 'premium' && styles.activeCardArrow
+                    ]}>↗️</Text>
+                    <Text style={[
+                        styles.clickMeText,
+                        activeCard === 'premium' && styles.activeClickMeText
+                    ]}>click me</Text>
                     <Text style={[
                         styles.cardTitle,
                         activeCard === 'premium' && styles.activeCardTitle
