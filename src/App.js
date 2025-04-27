@@ -15,6 +15,7 @@ import SceneSpline from "./components/SceneSpline"
 
 
 import Navbar from "./components/Navbar";// Import BlackBackground
+import Footer from "./components/Footer";
 
 import {View, SafeAreaView} from 'react-native';
 
@@ -122,6 +123,8 @@ const App = () => {
             <Text style={styles.regularText}>
                 This is some regular text below the Spline scene.
             </Text>
+            
+            <Footer />
         </ScrollView>
     );
 };
