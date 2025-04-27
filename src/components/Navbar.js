@@ -1,44 +1,73 @@
-// Navbar.js
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { StyleSheet, View, Text, Linking, Dimensions } from 'react-native';
 
 const Navbar = () => {
+    const windowWidth = Dimensions.get('window').width;
+    const isMobile = windowWidth < 768;
+
+    const handleLink = (url) => {
+        Linking.openURL(url);
+    };
+
     return (
-        <View style={styles.navbar}>
-            <Text style={styles.navText}>BeartKreative</Text>
-            {/* Add navigation items if needed */}
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Home</Text>
-            </TouchableOpacity>
+        <View style={styles.container}>
+            <View style={styles.navbar}>
+                {/* Logo */}
+                <Text style={[styles.logo, isMobile && styles.logoMobile]}>Beart</Text>
+
+                {/* Navigation Links - Responsive */}
+                <View style={styles.navLinks}>
+                    <Text style={[styles.navItem, isMobile && styles.navItemMobile]} onPress={() => handleLink('/beart/public')}>Home</Text>
+                    <Text style={[styles.navItem, isMobile && styles.navItemMobile]} onPress={() => handleLink('/services')}>Services</Text>
+                    <Text style={[styles.navItem, isMobile && styles.navItemMobile]} onPress={() => handleLink('/contact')}>Contact</Text>
+                </View>
+            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    navbar: {
-        height: 60,
+    container: {
         width: '100%',
-        backgroundColor: '#333',
-        justifyContent: 'center',
-        alignItems: 'center',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        zIndex: 50,
+    },
+    navbar: {
+        height: 80,
+        backgroundColor: 'black',
         flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         paddingHorizontal: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#333',
     },
-    navText: {
-        color: 'white',
-        fontSize: 18,
+    logo: {
+        color: '#fff',
+        fontSize: 24,
         fontWeight: 'bold',
-        flex: 1,
     },
-    button: {
-        backgroundColor: 'white',
-        paddingVertical: 8,
-        paddingHorizontal: 20,
-        borderRadius: 5,
+    logoMobile: {
+        fontSize: 20,
     },
-    buttonText: {
-        color: 'black',
+    navLinks: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    navItem: {
+        color: '#fff',
+        fontSize: 16,
         fontWeight: '600',
+        paddingHorizontal: 15,
+        textTransform: 'uppercase',
+        letterSpacing: 1,
+    },
+    navItemMobile: {
+        fontSize: 12,
+        paddingHorizontal: 8,
+        letterSpacing: 0.5,
     },
 });
 

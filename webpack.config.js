@@ -38,5 +38,6 @@ module.exports = {
             path.join(__dirname, 'public'), // Serve static files from the public folder
         ],
         port: 3000,
+
     },
 };
