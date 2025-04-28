@@ -17,7 +17,7 @@ import SceneSpline from "./components/SceneSpline"
 import Navbar from "./components/Navbar";// Import BlackBackground
 import Footer from "./components/Footer";
 
-import {View, SafeAreaView} from 'react-native';
+import {View, SafeAreaView, Image} from 'react-native';
 
 
 
@@ -37,7 +37,7 @@ const App = () => {
         },
         engagement: {
             title: "Engagement Sessions",
-            mainText: "Beautiful pre-wedding photoshoots that celebrate your love story. Perfect for save-the-dates and wedding invitations, set in stunning locations across the region.",
+            mainText: "Beautiful pre-wedding photo that celebrate your love story. Perfect for save-the-dates and wedding invitations, set in stunning locations across the region.",
             detailText: "Two-hour engagement sessions at your chosen location. Includes outfit changes, location suggestions, professional editing, and a mix of posed and natural shots. Perfect for announcements and wedding websites! 💍✨"
         },
         premium: {
@@ -294,6 +294,31 @@ const App = () => {
             color: 'rgba(255, 255, 255, 0.7)',
             textAlign: 'center',
         },
+        swipeMeContainer: {
+            position: 'absolute',
+            bottom: 20,
+            left: 0,
+            right: 0,
+            flexDirection: 'row', // <-- image and text side by side
+            justifyContent: 'center',
+            alignItems: 'center',
+
+        },
+
+        swipeMeText: {
+            textAlign: 'center',
+            fontSize: width > 768 ? 32 : 36,
+            color: '#333333',
+            fontStyle: 'italic',
+            marginLeft: 10, // space between image and text
+
+        },
+
+        iphoneIcon: {
+            width: 40, // or whatever size you want
+            height: 40,
+            resizeMode: 'contain',
+        },
     });
 
     return (
@@ -393,10 +418,23 @@ const App = () => {
             <View style={styles.testimonialSection}>
                 <View style={styles.testimonialWrapper}>
                     <Text style={styles.sectionTitle}>Client Love Stories</Text>
+
+                    <View style={styles.swipeMeContainer}>
+                        <Image source={{ uri: '/iphone.png' }}
+                               style={styles.iphoneIcon}
+                               accessibilityLabel="Icon representing swiping "
+                        />
+                        <Text style={styles.swipeMeText}>Swipe Me</Text>
+                    </View>
+
+
+
                     <ScrollView 
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={styles.testimonialScrollContainer}
+
+
                     >
                         <View style={styles.testimonial}>
                             <Text style={styles.testimonialText}>
@@ -404,6 +442,8 @@ const App = () => {
                             </Text>
                             <Text style={styles.testimonialAuthor}>- Sarah & James ❤️</Text>
                             <Text style={styles.testimonialDate}>Summer Wedding 2023 🌞</Text>
+
+
                         </View>
 
                         <View style={styles.testimonial}>
@@ -436,9 +476,17 @@ const App = () => {
                             </Text>
                             <Text style={styles.testimonialAuthor}>- Laura & David 💝</Text>
                             <Text style={styles.testimonialDate}>Mountain Elopement 🏔️</Text>
+
+
+
+
+
                         </View>
+
                     </ScrollView>
                 </View>
+
+
             </View>
 
             <View style={styles.statsSection}>
