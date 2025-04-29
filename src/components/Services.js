@@ -4,13 +4,13 @@ import Navbar from './Navbar';
 
 export default function Services() {
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <Navbar />
             <View style={styles.content}>
                 <Text style={styles.title}>Our Services</Text>
                 {/* Add your services content here */}
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

@@ -1,26 +1,34 @@
 import React from 'react';
-import { StyleSheet, View, Text, Linking, Dimensions } from 'react-native';
+import {StyleSheet, View, Text, Linking, Dimensions, TouchableOpacity} from 'react-native';
+import {useNavigation} from "@react-navigation/native";
 
 const Navbar = () => {
     const windowWidth = Dimensions.get('window').width;
     const isMobile = windowWidth < 768;
+    const navigation = useNavigation();
 
     const handleLink = (url) => {
-        Linking.openURL(url);
+        navigation.navigate(url);
     };
 
     return (
         <View style={styles.container}>
             <View style={[styles.navbar, isMobile && styles.navbarMobile]}>
                 {/* Logo */}
-                <Text style={[styles.logo, isMobile && styles.logoMobile]}>Beart</Text>
-
+                <TouchableOpacity onPress={() => handleLink('Home')} >
+                    <Text style={[styles.logo, isMobile && styles.logoMobile]}>Beart</Text>
+                </TouchableOpacity>
                 {/* Navigation Links - Responsive */}
                 <View style={styles.navLinks}>
-                    <Text style={[styles.navItem, isMobile && styles.navItemMobile]} onPress={() => handleLink('/beart/public')}>Home</Text>
-                    <Text style={[styles.navItem, isMobile && styles.navItemMobile]} onPress={() => handleLink('/services')}>Services</Text>
-                    <Text style={[styles.navItem, isMobile && styles.navItemMobile]} onPress={() => handleLink('/contact')}>Contact</Text>
-
+                    <TouchableOpacity onPress={() => handleLink('Home')} >
+                        <Text style={[styles.navItem, isMobile && styles.navItemMobile]}>Home</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() =>handleLink('Services')}>
+                        <Text style={[styles.navItem, isMobile && styles.navItemMobile]}>Services</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() =>handleLink('Contact')}>
+                        <Text style={[styles.navItem, isMobile && styles.navItemMobile]}>Contact</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>

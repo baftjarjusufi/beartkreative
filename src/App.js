@@ -10,12 +10,15 @@ import Home from "./components/Home";
 
 
 import {View} from 'react-native';
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import {NavigationContainer} from "@react-navigation/native";
+import Services from "./components/Services";
+import Contact from "./components/Contact";
 
 
+const Stack = createNativeStackNavigator();
 
 const App = () => {
-
-
 
     const styles = StyleSheet.create({
         container: {
@@ -23,34 +26,38 @@ const App = () => {
             backgroundColor: "black",
             position: 'relative'
         },
-        navbar: {
-            height: 80,
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: 50
-        },
-
     });
 
+    const linking = {
+        prefixes: ['http://localhost:3000', 'https://yourdomain.com'],
+        config: {
+            screens: {
+                Home: '/',
+                Services: 'services',
+                Contact: 'contact',
+            },
+        },
+    };
+
     return (
-        <>
         <ScrollView contentContainerStyle={styles.container}>
-            <View style={styles.navbar}>
-                <Navbar />
-            </View>
-
-            <View>
-                <Home />
-            </View>
-
-
-
-
+            <NavigationContainer linking={linking} >
+                <Stack.Navigator id={"mainNavigation"} screenOptions={{ headerShown: false }}>
+                    <Stack.Screen
+                        name="Home"
+                        component={Home}
+                    />
+                    <Stack.Screen
+                        name="Services"
+                        component={Services}
+                    />
+                    <Stack.Screen
+                        name="Contact"
+                        component={Contact}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
         </ScrollView>
-        </>
-
     );
 };
 

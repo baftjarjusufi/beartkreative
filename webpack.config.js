@@ -20,7 +20,12 @@ module.exports = {
                 exclude: /node_modules/,
                 use: 'babel-loader',
             },
-            // Add a rule for loading SVG files as URL
+            {
+                test: /\.m?js/,
+                resolve: {
+                    fullySpecified: false,
+                },
+            },
             {
                 test: /\.svg$/,
                 use: ['file-loader'],

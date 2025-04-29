@@ -4,13 +4,13 @@ import Navbar from './Navbar'; // Adjust the path if needed
 
 export default function Contact() {
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <Navbar />
             <View style={styles.content}>
                 <Text style={styles.title}>Our Contact</Text>
                 {/* Add contact info here */}
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 
