@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, Linking, Dimensions } from 'react-native';
+import TouchableOpacity from 'react-native';
 
 const Navbar = () => {
     const windowWidth = Dimensions.get('window').width;
@@ -20,6 +21,7 @@ const Navbar = () => {
                     <Text style={[styles.navItem, isMobile && styles.navItemMobile]} onPress={() => handleLink('/beart/public')}>Home</Text>
                     <Text style={[styles.navItem, isMobile && styles.navItemMobile]} onPress={() => handleLink('/services')}>Services</Text>
                     <Text style={[styles.navItem, isMobile && styles.navItemMobile]} onPress={() => handleLink('/contact')}>Contact</Text>
+
                 </View>
             </View>
         </View>
