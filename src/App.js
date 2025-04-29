@@ -1,32 +1,16 @@
-import React, { useState } from 'react';
-import {Dimensions, ScrollView, StatusBar, StyleSheet} from 'react-native';
-import { Text } from 'react-native';
-
-import { useEffect } from 'react';
-
-import Spline from "@splinetool/react-spline";
-
-
-import SceneSpline from "./components/SceneSpline"
-
+import React from 'react';
+import { ScrollView, StyleSheet} from 'react-native';
 
 
 
 
 
 import Navbar from "./components/Navbar";// Import BlackBackground
-import Footer from "./components/Footer";
 import Home from "./components/Home";
 
 
-import {View, SafeAreaView, Image} from 'react-native';
+import {View} from 'react-native';
 
-
-
-
-
-
-const {width,height} = Dimensions.get("window");
 
 
 const App = () => {

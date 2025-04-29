@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View, Text, Linking, Dimensions } from 'react-native';
-import TouchableOpacity from 'react-native';
 
 const Navbar = () => {
     const windowWidth = Dimensions.get('window').width;
