@@ -1,11 +1,13 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin'); // ⬅️ Add this line
 
 module.exports = {
     entry: './src/index.js',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
+        publicPath: '/', // ⬅️ This helps avoid 404s with routing/assets
     },
     resolve: {
         alias: {
@@ -40,6 +42,17 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './public/index.html',
+        }),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: 'public',
+                    to: '.',
+                    globOptions: {
+                        ignore: ['**/index.html'], // ✅ Prevents conflict with HtmlWebpackPlugin
+                    },
+                },
+            ],
         }),
     ],
     devServer: {
