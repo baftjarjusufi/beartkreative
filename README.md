@@ -2,4 +2,6 @@
 Beartttttttttttttttttt
 
 
-demo https://idyllic-heliotrope-3edae1.netlify.app/
+demo https://beartmk.netlify.app/
+
+beartkreative.vercel.app
