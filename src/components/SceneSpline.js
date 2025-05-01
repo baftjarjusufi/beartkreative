@@ -8,7 +8,7 @@ const { width, height } = Dimensions.get('window');
 const SceneSpline = () => {
     return (
         <View style={styles.splineWrapper}>
-            <Spline scene="/scene3.splinecode" />
+            <Spline scene="/scene10.splinecode" />
         </View>
     );
 };
