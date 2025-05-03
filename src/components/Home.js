@@ -3,33 +3,18 @@ import {Dimensions, ScrollView, StatusBar, StyleSheet} from 'react-native';
 import { Text } from 'react-native';
 import {View, SafeAreaView, Image} from 'react-native';
 
-
-
-
-
-
-
-
-
-import Navbar from "./Navbar";// Import BlackBackground
 import Footer from "./Footer";
 import BackgroundPhoto from './BackgroundPhoto'
 
-
-
 const { width } = Dimensions.get("window");
-
-
-
 
 const Home = () => {
     const [activeCard, setActiveCard] = useState(null);
     const [scrollY, setScrollY] = useState(0);
 
     const handleScroll = (event) => {
-        setScrollY(event.nativeEvent.contentOffset.y); // Update scroll position
+        setScrollY(event.nativeEvent.contentOffset.y);
     };
-
 
     const cardData = {
         wedding: {
@@ -49,12 +34,10 @@ const Home = () => {
         }
     };
 
-
     const styles = StyleSheet.create({
         container: {
-
             // minHeight: "100vh",
-             backgroundColor: "black",
+            backgroundColor: "black",
             // position: 'relative'
         },
 
@@ -300,7 +283,6 @@ const Home = () => {
             flexDirection: 'row', // <-- image and text side by side
             justifyContent: 'center',
             alignItems: 'center',
-
         },
 
         swipeMeText: {
@@ -309,7 +291,6 @@ const Home = () => {
             color: '#333333',
             fontStyle: 'italic',
             marginLeft: 10, // space between image and text
-
         },
 
         iphoneIcon: {
@@ -319,22 +300,17 @@ const Home = () => {
         },
     });
 
-
-
-
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <View>
-                <Navbar />
+                {/* <Navbar /> */}
             </View>
-
 
             <View style={styles.bgContainer}>
                 <BackgroundPhoto />
             </View>
 
             <View style={styles.cardContainer}>
-
                 <View style={styles.cardBackground} />
                 <View
                     style={[
@@ -430,14 +406,10 @@ const Home = () => {
                         <Text style={styles.swipeMeText}>Swipe Me</Text>
                     </View>
 
-
-
                     <ScrollView
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={styles.testimonialScrollContainer}
-
-
                     >
                         <View style={styles.testimonial}>
                             <Text style={styles.testimonialText}>
@@ -445,8 +417,6 @@ const Home = () => {
                             </Text>
                             <Text style={styles.testimonialAuthor}>- Sarah & James ❤️</Text>
                             <Text style={styles.testimonialDate}>Summer Wedding 2023 🌞</Text>
-
-
                         </View>
 
                         <View style={styles.testimonial}>
@@ -479,17 +449,9 @@ const Home = () => {
                             </Text>
                             <Text style={styles.testimonialAuthor}>- Laura & David 💝</Text>
                             <Text style={styles.testimonialDate}>Mountain Elopement 🏔️</Text>
-
-
-
-
-
                         </View>
-
                     </ScrollView>
                 </View>
-
-
             </View>
 
             <View style={styles.statsSection}>
@@ -513,10 +475,6 @@ const Home = () => {
 
             <Footer />
         </ScrollView>
-
-
-
-
     );
 };
 

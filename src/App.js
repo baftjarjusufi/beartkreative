@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet} from 'react-native';
+import { ScrollView, StyleSheet, Animated} from 'react-native';
 
 
 
@@ -19,6 +19,7 @@ import Contact from "./components/Contact";
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+    const scrollY = new Animated.Value(0);
 
     const styles = StyleSheet.create({
         container: {
@@ -40,11 +41,16 @@ const App = () => {
     };
 
     return (
-
-        <ScrollView contentContainerStyle={styles.container}>
-
+        <ScrollView 
+            contentContainerStyle={styles.container}
+            onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                { useNativeDriver: true }
+            )}
+            scrollEventThrottle={16}
+        >
             <NavigationContainer linking={linking} >
-
+                <Navbar scrollY={scrollY} />
                 <Stack.Navigator id={"mainNavigation"} screenOptions={{ headerShown: false }}>
                     <Stack.Screen
                         name="Home"
@@ -61,7 +67,6 @@ const App = () => {
                 </Stack.Navigator>
             </NavigationContainer>
         </ScrollView>
-
     );
 };
 

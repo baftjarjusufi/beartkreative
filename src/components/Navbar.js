@@ -1,24 +1,44 @@
 import React from 'react';
-import {StyleSheet, View, Text, Linking, Dimensions, TouchableOpacity, ScrollView} from 'react-native';
+import {StyleSheet, View, Text, Linking, Dimensions, TouchableOpacity, ScrollView, Animated} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
-import {useState} from "react";
-
+import {useState, useEffect, useRef} from "react";
 
 const Navbar = () => {
     const windowWidth = Dimensions.get('window').width;
     const isMobile = windowWidth < 768;
     const navigation = useNavigation();
+    const scrollY = useRef(new Animated.Value(0)).current;
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const listener = scrollY.addListener(({ value }) => {
+            setIsScrolled(value > 50); // Change navbar behavior after scrolling 50 units
+        });
+
+        return () => {
+            scrollY.removeListener(listener);
+        };
+    }, []);
 
     const handleLink = (url) => {
         navigation.navigate(url);
-
-
     };
 
-// Inside Navbar.js
-    return (
-        <View style={[styles.navbar, isMobile && styles.navbarMobile]}>
+    const navbarTranslateY = scrollY.interpolate({
+        inputRange: [0, 50],
+        outputRange: [0, -80], // Move navbar up by its height
+        extrapolate: 'clamp',
+    });
 
+    return (
+        <Animated.View style={[
+            styles.navbar, 
+            isMobile && styles.navbarMobile,
+            {
+                transform: [{ translateY: navbarTranslateY }],
+                backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.05)',
+            }
+        ]}>
             <TouchableOpacity onPress={() => handleLink('Home')} >
                 <Text style={[styles.logo, isMobile && styles.logoMobile]}>Beart</Text>
             </TouchableOpacity>
@@ -34,50 +54,42 @@ const Navbar = () => {
                     <Text style={[styles.navItem, isMobile && styles.navItemMobile]}>Contact</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </Animated.View>
     );
-
 };
 
 const styles = StyleSheet.create({
-
     navbar: {
         position: 'absolute',
-        height: 80,
+        height: 60,
         width: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.05)', // Much more transparent background
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 20,
-        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.15)', // Horizontal, Vertical, Blur Radius, Color
-
-        // For blur effect, this may not work directly in React Native Web
-        // Use CSS for web to achieve the blur effect
-        backdropFilter: 'blur(6px)', // Corrected to JavaScript style
-        webkitBackdropFilter: 'blur(8px)',// Safari support
+        boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.3)',
+        backdropFilter: 'blur(8px)',
+        webkitBackdropFilter: 'blur(8px)',
         top: 0,
         left: 0,
         zIndex: 10,
-
     },
 
-
     navbarMobile: {
-        height: 120,
+        height: 80,
         paddingHorizontal: 15,
-        paddingVertical: 15,
-        justifyContent: 'space-between', // Ensure proper spacing between logo and nav links
-
+        paddingVertical: 10,
+        justifyContent: 'space-between',
     },
     logo: {
         color: '#fff',
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
-        marginLeft: 40, // Add space to move logo to the right
+        marginLeft: 40,
     },
     logoMobile: {
-        fontSize: 36,
+        fontSize: 28,
     },
     navLinks: {
         flexDirection: 'row',
@@ -85,15 +97,15 @@ const styles = StyleSheet.create({
     },
     navItem: {
         color: '#fff',
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: '600',
-        paddingHorizontal: 15,
+        paddingHorizontal: 12,
         textTransform: 'uppercase',
         letterSpacing: 1,
     },
     navItemMobile: {
-        fontSize: 28,
-        paddingHorizontal: 16,
+        fontSize: 22,
+        paddingHorizontal: 12,
         letterSpacing: 0.5,
         fontWeight: '600',
     },

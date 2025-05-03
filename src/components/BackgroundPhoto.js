@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions, ImageBackground } from 'react-native';
+import { View, StyleSheet, Dimensions, ImageBackground, Text } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -9,21 +9,72 @@ const BackgroundPhoto = () => {
             source={{ uri: '/test-background.png' }}
             style={styles.bgPhoto}
             resizeMode="cover"
-        />
+        >
+            <View style={styles.overlay}>
+                <View style={styles.textContainer}>
+                    <Text style={styles.mainText}>BEART</Text>
+                    <View style={styles.line} />
+                    <Text style={styles.subText}>Photography</Text>
+                    <Text style={styles.description}>Capturing life's most precious moments with artistry and passion</Text>
+                </View>
+            </View>
+        </ImageBackground>
     )
 }
 
-
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#000', // optional
+        backgroundColor: '#000',
         alignItems: 'center',
         justifyContent: 'center',
     },
     bgPhoto: {
-
         width: '100%',
-        height: width > 768 ? height * 0.7 : height * 1.2, // Increased height for mobile
+        height: width > 768 ? height * 0.7 : height * 1.2,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    textContainer: {
+        alignItems: 'center',
+        maxWidth: '90%',
+        padding: 20,
+    },
+    mainText: {
+        color: '#fff',
+        fontSize: width > 768 ? 72 : 56,
+        fontWeight: '300',
+        textAlign: 'center',
+        letterSpacing: 8,
+        marginBottom: 10,
+    },
+    line: {
+        width: width > 768 ? 200 : 150,
+        height: 1,
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        marginVertical: 20,
+    },
+    subText: {
+        color: '#fff',
+        fontSize: width > 768 ? 24 : 20,
+        fontWeight: '300',
+        textAlign: 'center',
+        letterSpacing: 4,
+        marginBottom: 20,
+    },
+    description: {
+        color: 'rgba(255, 255, 255, 0.8)',
+        fontSize: width > 768 ? 18 : 16,
+        textAlign: 'center',
+        lineHeight: 28,
+        letterSpacing: 1,
+        maxWidth: width > 768 ? '60%' : '80%',
     },
 });
+
 export default BackgroundPhoto
