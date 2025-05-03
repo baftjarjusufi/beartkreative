@@ -23,7 +23,7 @@ const App = () => {
     const styles = StyleSheet.create({
         container: {
             minHeight: "100vh",
-            backgroundColor: "black",
+            backgroundColor: "transparent",
             position: 'relative'
         },
     });
@@ -40,8 +40,11 @@ const App = () => {
     };
 
     return (
+
         <ScrollView contentContainerStyle={styles.container}>
+
             <NavigationContainer linking={linking} >
+
                 <Stack.Navigator id={"mainNavigation"} screenOptions={{ headerShown: false }}>
                     <Stack.Screen
                         name="Home"
@@ -58,6 +61,7 @@ const App = () => {
                 </Stack.Navigator>
             </NavigationContainer>
         </ScrollView>
+
     );
 };
 

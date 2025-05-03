@@ -1,6 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, Text, Linking, Dimensions, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, Linking, Dimensions, TouchableOpacity, ScrollView} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
+import {useState} from "react";
+
 
 const Navbar = () => {
     const windowWidth = Dimensions.get('window').width;
@@ -9,59 +11,70 @@ const Navbar = () => {
 
     const handleLink = (url) => {
         navigation.navigate(url);
+
+
     };
 
+// Inside Navbar.js
     return (
-        <View style={styles.container}>
-            <View style={[styles.navbar, isMobile && styles.navbarMobile]}>
-                {/* Logo */}
+        <View style={[styles.navbar, isMobile && styles.navbarMobile]}>
+
+            <TouchableOpacity onPress={() => handleLink('Home')} >
+                <Text style={[styles.logo, isMobile && styles.logoMobile]}>Beart</Text>
+            </TouchableOpacity>
+
+            <View style={styles.navLinks}>
                 <TouchableOpacity onPress={() => handleLink('Home')} >
-                    <Text style={[styles.logo, isMobile && styles.logoMobile]}>Beart</Text>
+                    <Text style={[styles.navItem, isMobile && styles.navItemMobile]}>Home</Text>
                 </TouchableOpacity>
-                {/* Navigation Links - Responsive */}
-                <View style={styles.navLinks}>
-                    <TouchableOpacity onPress={() => handleLink('Home')} >
-                        <Text style={[styles.navItem, isMobile && styles.navItemMobile]}>Home</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() =>handleLink('Services')}>
-                        <Text style={[styles.navItem, isMobile && styles.navItemMobile]}>Services</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() =>handleLink('Contact')}>
-                        <Text style={[styles.navItem, isMobile && styles.navItemMobile]}>Contact</Text>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity onPress={() =>handleLink('Services')}>
+                    <Text style={[styles.navItem, isMobile && styles.navItemMobile]}>Services</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() =>handleLink('Contact')}>
+                    <Text style={[styles.navItem, isMobile && styles.navItemMobile]}>Contact</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
+
 };
 
 const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        zIndex: 50,
-    },
+
     navbar: {
+        position: 'absolute',
         height: 80,
-        backgroundColor: 'black',
+        width: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.05)', // Much more transparent background
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#333',
+        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.15)', // Horizontal, Vertical, Blur Radius, Color
+
+        // For blur effect, this may not work directly in React Native Web
+        // Use CSS for web to achieve the blur effect
+        backdropFilter: 'blur(6px)', // Corrected to JavaScript style
+        webkitBackdropFilter: 'blur(8px)',// Safari support
+        top: 0,
+        left: 0,
+        zIndex: 10,
+
     },
+
+
     navbarMobile: {
         height: 120,
         paddingHorizontal: 15,
         paddingVertical: 15,
+        justifyContent: 'space-between', // Ensure proper spacing between logo and nav links
+
     },
     logo: {
         color: '#fff',
         fontSize: 24,
         fontWeight: 'bold',
+        marginLeft: 40, // Add space to move logo to the right
     },
     logoMobile: {
         fontSize: 36,

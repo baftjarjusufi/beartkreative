@@ -3,9 +3,6 @@ import {Dimensions, ScrollView, StatusBar, StyleSheet} from 'react-native';
 import { Text } from 'react-native';
 import {View, SafeAreaView, Image} from 'react-native';
 
-import { useEffect } from 'react';
-
-import Spline from "@splinetool/react-spline";
 
 
 
@@ -16,7 +13,7 @@ import Spline from "@splinetool/react-spline";
 
 import Navbar from "./Navbar";// Import BlackBackground
 import Footer from "./Footer";
-import SceneSpline from './SceneSpline'
+import BackgroundPhoto from './BackgroundPhoto'
 
 
 
@@ -27,6 +24,11 @@ const { width } = Dimensions.get("window");
 
 const Home = () => {
     const [activeCard, setActiveCard] = useState(null);
+    const [scrollY, setScrollY] = useState(0);
+
+    const handleScroll = (event) => {
+        setScrollY(event.nativeEvent.contentOffset.y); // Update scroll position
+    };
 
 
     const cardData = {
@@ -50,23 +52,18 @@ const Home = () => {
 
     const styles = StyleSheet.create({
         container: {
-            minHeight: "100vh",
-            backgroundColor: "black",
-            position: 'relative'
+
+            // minHeight: "100vh",
+             backgroundColor: "black",
+            // position: 'relative'
         },
-        navbar: {
-            height: 80,
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: 50
-        },
-        splineContainer: {
+
+        bgContainer: {
             width: '100%',
-            marginTop: 80, // Match navbar height
-            backgroundColor: 'black'
+            position: 'relative',
+            zIndex: -1, // Ensure background is behind navbar and other content
         },
+
         cardContainer: {
             padding: width > 768 ? 40 : 20,
             flexDirection: width > 768 ? 'row' : 'column',
@@ -326,17 +323,18 @@ const Home = () => {
 
 
     return (
-
         <ScrollView contentContainerStyle={styles.container}>
-            <View style={styles.navbar}>
+            <View>
                 <Navbar />
             </View>
 
-            <View style={styles.splineContainer}>
-                <SceneSpline style={{ width: '100%', height: '100%' }} />
+
+            <View style={styles.bgContainer}>
+                <BackgroundPhoto />
             </View>
 
             <View style={styles.cardContainer}>
+
                 <View style={styles.cardBackground} />
                 <View
                     style={[
@@ -515,6 +513,7 @@ const Home = () => {
 
             <Footer />
         </ScrollView>
+
 
 
 
