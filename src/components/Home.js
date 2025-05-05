@@ -12,6 +12,8 @@ const { width } = Dimensions.get("window");
 const Home = () => {
     const [activeCard, setActiveCard] = useState(null);
     const [scrollY, setScrollY] = useState(0);
+    const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
+    const testimonialScrollViewRef = useRef(null);
 
     const handleScroll = (event) => {
         setScrollY(event.nativeEvent.contentOffset.y);
@@ -20,10 +22,46 @@ const Home = () => {
         e.preventDefault();
     };
 
+    const scrollToTestimonial = (index) => {
+        if (testimonialScrollViewRef.current) {
+            const scrollAmount = width * 0.8; // Adjust this value based on your testimonial width
+            testimonialScrollViewRef.current.scrollTo({
+                x: index * scrollAmount,
+                animated: true
+            });
+            setCurrentTestimonialIndex(index);
+        }
+    };
 
+    const swipeHandlers = useSwipeable({
+        onSwipedLeft: () => {
+            if (currentTestimonialIndex < 4) {
+                scrollToTestimonial(currentTestimonialIndex + 1);
+            }
+        },
+        onSwipedRight: () => {
+            if (currentTestimonialIndex > 0) {
+                scrollToTestimonial(currentTestimonialIndex - 1);
+            }
+        },
+        preventDefaultTouchmoveEvent: true,
+        trackMouse: true
+    });
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'ArrowLeft' && currentTestimonialIndex > 0) {
+                scrollToTestimonial(currentTestimonialIndex - 1);
+            } else if (e.key === 'ArrowRight' && currentTestimonialIndex < 4) { // Assuming 5 testimonials
+                scrollToTestimonial(currentTestimonialIndex + 1);
+            }
+        };
 
-
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [currentTestimonialIndex]);
 
     const cardData = {
         wedding: {
@@ -42,8 +80,6 @@ const Home = () => {
             detailText: "Shërbimi ynë premium përfshin orë mbulimi të pakufizuara, fotografi me dron, pamje të fotografive në të njëjtën ditë, një album luksoz  dhe të gjitha skedarët digjitalë me të drejta të plota për printim. Përvoja më e plotë në fotografi dasmash! 📸💝"
         }
     };
-
-
 
     const styles = StyleSheet.create({
         container: {
@@ -233,6 +269,7 @@ const Home = () => {
             shadowOpacity: 0.2,
             shadowRadius: 40,
             elevation: 20,
+            cursor: 'grab',
         },
         sectionTitle: {
             fontSize: width > 768 ? 48 : 36,
@@ -247,6 +284,7 @@ const Home = () => {
             paddingHorizontal: width > 768 ? 80 : 40,
             paddingBottom: 40,
             gap: width > 768 ? 60 : 40,
+            cursor: 'grab',
         },
         testimonial: {
             backgroundColor: '#2a2a2a',
@@ -269,6 +307,7 @@ const Home = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            cursor: 'grab',
         },
         testimonialText: {
             fontSize: width > 768 ? 28 : 24,
@@ -452,60 +491,67 @@ const Home = () => {
                                style={styles.iphoneIcon}
                                userSelect="none"
                                accessibilityLabel="Icon representing swiping "
-                               onContextMenu={disableSave} // disables right-click on image
-                               onTouchStart={disableSave} // disables long touch on mobile
-
-
+                               onContextMenu={disableSave}
+                               onTouchStart={disableSave}
                         />
                         <Text style={styles.swipeMeText}>Swipe Me</Text>
                     </View>
 
-                    <ScrollView
+                    <View {...swipeHandlers}>
+                        <ScrollView
+                            ref={testimonialScrollViewRef}
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={styles.testimonialScrollContainer}
+                            onScroll={(event) => {
+                                const newIndex = Math.round(event.nativeEvent.contentOffset.x / (width * 0.8));
+                                if (newIndex !== currentTestimonialIndex) {
+                                    setCurrentTestimonialIndex(newIndex);
+                                }
+                            }}
+                            scrollEventThrottle={16}
+                        >
+                            <View style={styles.testimonial}>
+                                <Text style={styles.testimonialText}>
+                                    "Fotografitë tona të dasmës janë thjesht mahnitëse ✨ Çdo herë që i shohim, rikthehemi në ato momente magjike. Vëmendja ndaj detajeve dhe mënyra se si kapën emocionet tona ishte perfekte! 💝"
+                                </Text>
+                                <Text style={styles.testimonialAuthor}>- Sara & Agon ❤️</Text>
+                                <Text style={styles.testimonialDate}>Summer Wedding 2023 🌞</Text>
+                            </View>
 
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={styles.testimonialScrollContainer}
-                    >
-                        <View style={styles.testimonial}>
-                            <Text style={styles.testimonialText}>
-                                "Fotografitë tona të dasmës janë thjesht mahnitëse ✨ Çdo herë që i shohim, rikthehemi në ato momente magjike. Vëmendja ndaj detajeve dhe mënyra se si kapën emocionet tona ishte perfekte! 💝"
-                            </Text>
-                            <Text style={styles.testimonialAuthor}>- Sara & Agon ❤️</Text>
-                            <Text style={styles.testimonialDate}>Summer Wedding 2023 🌞</Text>
-                        </View>
+                            <View style={styles.testimonial}>
+                                <Text style={styles.testimonialText}>
+                                    "Foto sesioni ishte një përvojë kaq argëtuese! 🌟 Na bënë të ndihemi kaq komod dhe natyralë. Fotografitë dolën mrekullisht dhe kapën perfekt historinë tonë të dashurisë 👰🤵"
+                                </Text>
+                                <Text style={styles.testimonialAuthor}>- Ermira & Arben 💕</Text>
+                                <Text style={styles.testimonialDate}>Summer Wedding 2024 🌊</Text>
+                            </View>
 
-                        <View style={styles.testimonial}>
-                            <Text style={styles.testimonialText}>
-                                "Foto sesioni ishte një përvojë kaq argëtuese! 🌟 Na bënë të ndihemi kaq komod dhe natyralë. Fotografitë dolën mrekullisht dhe kapën perfekt historinë tonë të dashurisë 👰🤵"
-                            </Text>
-                            <Text style={styles.testimonialAuthor}>- Ermira & Arben 💕</Text>
-                            <Text style={styles.testimonialDate}>Summer Wedding 2024 🌊</Text>
-                        </View>
+                            <View style={styles.testimonial}>
+                                <Text style={styles.testimonialText}>
+                                    "Nuk mund të jemi më të lumtur me zgjedhjen tonë të kompanisë✨ Ata shkuan përtej pritshmërive për të kapur çdo moment të veçantë të dasmës sonë në destinacion. Profesionistë të vërtetë! 💫"
+                                </Text>
+                                <Text style={styles.testimonialAuthor}>- Ardita & Alban 💝</Text>
+                                <Text style={styles.testimonialDate}>Autumn wedding 2024🌺</Text>
+                            </View>
 
-                        <View style={styles.testimonial}>
-                            <Text style={styles.testimonialText}>
-                                "Nuk mund të jemi më të lumtur me zgjedhjen tonë të kompanisë✨ Ata shkuan përtej pritshmërive për të kapur çdo moment të veçantë të dasmës sonë në destinacion. Profesionistë të vërtetë! 💫"
-                            </Text>
-                            <Text style={styles.testimonialAuthor}>- Ardita & Alban 💝</Text>
-                            <Text style={styles.testimonialDate}>Autumn wedding 2024🌺</Text>
-                        </View>
+                            <View style={styles.testimonial}>
+                                <Text style={styles.testimonialText}>
+                                    "Përftimi i momenteve të natyrshme mes nesh dhe të ftuarve tanë ishte fantastik ✨ Çdo herë që shohim albumin, ndiejmë gëzim të thellë 💖"
 
-                        <View style={styles.testimonial}>
-                            <Text style={styles.testimonialText}>
-                                "Përftimi i momenteve të natyrshme mes nesh dhe të ftuarve tanë ishte fantastik ✨ Çdo herë që shohim albumin, ndiejmë gëzim të thellë 💖"
+                                </Text>
+                                <Text style={styles.testimonialAuthor}>- Era & Flamur 💕</Text>
+                                <Text style={styles.testimonialDate}>Spring Wedding 2023 🌸</Text>
+                            </View>
 
-                            </Text>
-                            <Text style={styles.testimonialAuthor}>- Era & Flamur 💕</Text>
-                            <Text style={styles.testimonialDate}>Spring Wedding 2023 🌸</Text>
-                        </View>
-
-                        <View style={styles.testimonial}>
-                            <Text style={styles.testimonialText}>
-                                "Jo vetëm që janë fotografë të talentuar, por janë edhe njerëz të mrekullueshëm për të punuar me ta ✨ E bënë martesën tonë të thjeshtë të ndihet kaq speciale 💫"                            </Text>
-                            <Text style={styles.testimonialAuthor}>- Laura & Donart 💝</Text>
-                            <Text style={styles.testimonialDate}>Summer wedding 2023 🌸</Text>
-                        </View>
-                    </ScrollView>
+                            <View style={styles.testimonial}>
+                                <Text style={styles.testimonialText}>
+                                    "Jo vetëm që janë fotografë të talentuar, por janë edhe njerëz të mrekullueshëm për të punuar me ta  ✨  E bënë martesën tonë të thjeshtë të ndihet kaq speciale 💫"                            </Text>
+                                <Text style={styles.testimonialAuthor}>- Laura & Donart 💝</Text>
+                                <Text style={styles.testimonialDate}>Summer wedding 2023 🌸</Text>
+                            </View>
+                        </ScrollView>
+                    </View>
                 </View>
             </View>
 
