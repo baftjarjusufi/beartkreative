@@ -1,10 +1,11 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {Dimensions, ScrollView, StatusBar, StyleSheet} from 'react-native';
 import { Text } from 'react-native';
 import {View, SafeAreaView, Image} from 'react-native';
 
 import Footer from "./Footer";
 import BackgroundPhoto from './BackgroundPhoto'
+import {useSwipeable} from "react-swipeable";
 
 const { width } = Dimensions.get("window");
 
@@ -12,28 +13,33 @@ const Home = () => {
     const [activeCard, setActiveCard] = useState(null);
     const [scrollY, setScrollY] = useState(0);
 
-
-
     const handleScroll = (event) => {
         setScrollY(event.nativeEvent.contentOffset.y);
     };
+    const disableSave = (e) => {
+        e.preventDefault();
+    };
+
+
+
+
 
 
     const cardData = {
         wedding: {
-            title: "Wedding Stories at us",
-            mainText: "Capturing your special moments with elegance and authenticity. Each wedding tells a unique story, and we're here to preserve those precious memories for generations to come.",
-            detailText: "Our wedding photography packages include full-day coverage, a second photographer, high-resolution digital files, and a beautiful online gallery. We focus on both candid moments and artistic portraits to tell your complete wedding story. ✨💑"
+            title: "Momentet tuaja të dasmës me ne ",
+            mainText: "Dokumentojmë momentet më të rëndësishme të jetës suaj me klas dhe autenticitet. Çdo dasmë ka historinë e saj, dhe ne jemi këtu për ta ruajtur atë në mënyrën më të bukur.",
+            detailText: "Paketat tona të fotografisë së dasmës përfshijnë mbulim të plotë gjatë gjithë ditës së dasmës, një foto sesion, fotografi digjitale me rezolucion të lartë dhe një galeri elegante. Fokusi ynë është si në momentet spontane, ashtu edhe në portretet artistike, për të treguar tërësisht historinë tuaj të dasmës. ✨👰🏻🤵🏻"
         },
         engagement: {
-            title: "Engagement Sessions",
-            mainText: "Beautiful pre-wedding photos that celebrate your love story. Perfect for save-the-dates and wedding invitations, set in stunning locations across the region.",
-            detailText: "Two-hour engagement sessions at your chosen location. Includes outfit changes, location suggestions, professional editing, and a mix of posed and natural shots. Perfect for announcements and wedding websites! 💍✨"
+            title: "Momente para dasmës",
+            mainText: "Fotografi të bukura para dasmës që festojnë historinë tuaj të dashurisë ❤️. Të përsosura për ftesat dhe njoftimet e dasmës 📩, realizuar në lokacione mahnitëse nëpër rajon 🌄.",
+            detailText: "Foto Sesione prej dy orësh në lokacionin që do të zgjidhni. Përfshin ndërrim veshjesh, sugjerime për lokacione, redaktim profesional dhe një kombinim të fotografive të pozicionuara dhe natyrale. Ideal për njoftime dhe faqe dasmash. 💍✨"
         },
         premium: {
-            title: "Premium Packages",
-            mainText: "From intimate ceremonies to grand celebrations, our customizable packages include full-day coverage, engagement sessions, luxury albums, and high-resolution digital files.",
-            detailText: "Our premium service includes unlimited coverage hours, drone photography, same-day photo previews, luxury leather album, and all digital files with full printing rights. The ultimate wedding photography experience! 📸💝"
+            title: "Paketat Premiume",
+            mainText: "Nga ngjarjet më të ngrohta deri te festat e paharrueshme, paketat tona të personalizueshme përfshijnë mbulim të plotë të ditës, sesione angazhimi, albume luksoze, fotografi digjitale në cilësi të lartë dhe regjistrim video me dron dhe kamerë të lëvizshme.",
+            detailText: "Shërbimi ynë premium përfshin orë mbulimi të pakufizuara, fotografi me dron, pamje të fotografive në të njëjtën ditë, një album luksoz  dhe të gjitha skedarët digjitalë me të drejta të plota për printim. Përvoja më e plotë në fotografi dasmash! 📸💝"
         }
     };
 
@@ -191,14 +197,19 @@ const Home = () => {
 
         },
         regularText: {
-            fontSize: 16,
+            fontSize: 40,
+            fontWeight: 'bold',
+            fontStyle: 'italic',
             color: 'rgba(255, 255, 255, 0.7)',
-            lineHeight: 24,
+            lineHeight: 44,
             marginTop: 40,
             marginBottom: 40,
             textAlign: 'center',
             letterSpacing: 0.3,
             userSelect: 'none', // For web environments
+            flexWrap: 'wrap',
+            maxWidth: '80%',
+            alignSelf: 'center'
 
         },
 
@@ -207,7 +218,6 @@ const Home = () => {
             backgroundColor: 'transparent',
             position: 'relative',
             marginVertical: 100,
-            userSelect: 'none', // For web environments
 
         },
         testimonialWrapper: {
@@ -231,7 +241,6 @@ const Home = () => {
             marginBottom: width > 768 ? 60 : 80,
             fontWeight: '700',
             letterSpacing: 1.2,
-            userSelect: 'none', // For web environments
 
         },
         testimonialScrollContainer: {
@@ -271,7 +280,6 @@ const Home = () => {
             letterSpacing: 0.8,
             maxWidth: width > 768 ? '85%' : '90%',
             alignSelf: 'center',
-            userSelect: 'none', // For web environments
 
         },
         testimonialAuthor: {
@@ -281,7 +289,6 @@ const Home = () => {
             fontWeight: '600',
             marginBottom: width > 768 ? 12 : 8,
             letterSpacing: 1,
-            userSelect: 'none', // For web environments
 
         },
         testimonialDate: {
@@ -289,31 +296,29 @@ const Home = () => {
             color: 'rgba(255, 255, 255, 0.7)',
             textAlign: 'center',
             letterSpacing: 0.5,
-            userSelect: 'none', // For web environments
 
         },
         statsSection: {
             flexDirection: width > 768 ? 'row' : 'column',
             justifyContent: 'space-around',
             alignItems: 'center',
-            padding: width > 768 ? 80 : 40,
-            gap: 40,
-            userSelect: 'none', // For web environments
-
+            padding: width > 768 ? 100 : 60,
+            gap: 60,
         },
+
         statItem: {
             alignItems: 'center',
         },
+
         statNumber: {
-            fontSize: width > 768 ? 48 : 36,
+            fontSize: width > 768 ? 60 : 48,
             color: '#ffffff',
             fontWeight: 'bold',
-            marginBottom: 10,
-            userSelect: 'none', // For web environments
-
+            marginBottom: 15,
         },
+
         statLabel: {
-            fontSize: width > 768 ? 18 : 16,
+            fontSize: width > 768 ? 22 : 20,
             color: 'rgba(255, 255, 255, 0.7)',
             textAlign: 'center',
         },
@@ -325,7 +330,6 @@ const Home = () => {
             flexDirection: 'row', // <-- image and text side by side
             justifyContent: 'center',
             alignItems: 'center',
-            userSelect: 'none', // For web environments
 
         },
 
@@ -335,7 +339,6 @@ const Home = () => {
             color: '#333333',
             fontStyle: 'italic',
             marginLeft: 10, // space between image and text
-            userSelect: 'none', // For web environments
 
         },
 
@@ -439,84 +442,93 @@ const Home = () => {
                 </View>
             </View>
 
+
             <View style={styles.testimonialSection}>
                 <View style={styles.testimonialWrapper}>
                     <Text style={styles.sectionTitle}>Client Love Stories</Text>
 
                     <View style={styles.swipeMeContainer}>
-                        <Image source={{ uri: '/iphone.png' }}
+                        <Image source={{ uri: '/iphone.png'  }}
                                style={styles.iphoneIcon}
+                               userSelect="none"
                                accessibilityLabel="Icon representing swiping "
+                               onContextMenu={disableSave} // disables right-click on image
+                               onTouchStart={disableSave} // disables long touch on mobile
+
+
                         />
                         <Text style={styles.swipeMeText}>Swipe Me</Text>
                     </View>
 
                     <ScrollView
+
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={styles.testimonialScrollContainer}
                     >
                         <View style={styles.testimonial}>
                             <Text style={styles.testimonialText}>
-                                "Our wedding photos are absolutely breathtaking ✨ Every time we look at them, we relive those magical moments all over again. The attention to detail and the way they captured our emotions was perfect! 💝"
+                                "Fotografitë tona të dasmës janë thjesht mahnitëse ✨ Çdo herë që i shohim, rikthehemi në ato momente magjike. Vëmendja ndaj detajeve dhe mënyra se si kapën emocionet tona ishte perfekte! 💝"
                             </Text>
-                            <Text style={styles.testimonialAuthor}>- Sarah & James ❤️</Text>
+                            <Text style={styles.testimonialAuthor}>- Sara & Agon ❤️</Text>
                             <Text style={styles.testimonialDate}>Summer Wedding 2023 🌞</Text>
                         </View>
 
                         <View style={styles.testimonial}>
                             <Text style={styles.testimonialText}>
-                                "The engagement shoot was such a fun experience! 🌟 They made us feel so comfortable and natural. The photos turned out amazing and perfectly captured our love story 💑"
+                                "Foto sesioni ishte një përvojë kaq argëtuese! 🌟 Na bënë të ndihemi kaq komod dhe natyralë. Fotografitë dolën mrekullisht dhe kapën perfekt historinë tonë të dashurisë 👰🤵"
                             </Text>
-                            <Text style={styles.testimonialAuthor}>- Emily & Michael 💕</Text>
-                            <Text style={styles.testimonialDate}>Beach Engagement 🌊</Text>
+                            <Text style={styles.testimonialAuthor}>- Ermira & Arben 💕</Text>
+                            <Text style={styles.testimonialDate}>Summer Wedding 2024 🌊</Text>
                         </View>
 
                         <View style={styles.testimonial}>
                             <Text style={styles.testimonialText}>
-                                "We couldn't be happier with our choice of photographer ✨ They went above and beyond to capture every special moment of our destination wedding. True professionals! 💫"
+                                "Nuk mund të jemi më të lumtur me zgjedhjen tonë të kompanisë✨ Ata shkuan përtej pritshmërive për të kapur çdo moment të veçantë të dasmës sonë në destinacion. Profesionistë të vërtetë! 💫"
                             </Text>
-                            <Text style={styles.testimonialAuthor}>- Sofia & Alexander 💝</Text>
-                            <Text style={styles.testimonialDate}>Destination Wedding in Italy 🌺</Text>
+                            <Text style={styles.testimonialAuthor}>- Ardita & Alban 💝</Text>
+                            <Text style={styles.testimonialDate}>Autumn wedding 2024🌺</Text>
                         </View>
 
                         <View style={styles.testimonial}>
                             <Text style={styles.testimonialText}>
-                                "The way they captured the candid moments between us and our guests was incredible ✨ Looking through our album brings tears of joy every time 💖"
+                                "Përftimi i momenteve të natyrshme mes nesh dhe të ftuarve tanë ishte fantastik ✨ Çdo herë që shohim albumin, ndiejmë gëzim të thellë 💖"
+
                             </Text>
-                            <Text style={styles.testimonialAuthor}>- Rachel & Thomas 💕</Text>
-                            <Text style={styles.testimonialDate}>Spring Garden Wedding 🌸</Text>
+                            <Text style={styles.testimonialAuthor}>- Era & Flamur 💕</Text>
+                            <Text style={styles.testimonialDate}>Spring Wedding 2023 🌸</Text>
                         </View>
 
                         <View style={styles.testimonial}>
                             <Text style={styles.testimonialText}>
-                                "Not only are they talented photographers, but they're also amazing people to work with ✨ They made our elopement feel so special and intimate 💫"
-                            </Text>
-                            <Text style={styles.testimonialAuthor}>- Laura & David 💝</Text>
-                            <Text style={styles.testimonialDate}>Mountain Elopement 🏔️</Text>
+                                "Jo vetëm që janë fotografë të talentuar, por janë edhe njerëz të mrekullueshëm për të punuar me ta ✨ E bënë martesën tonë të thjeshtë të ndihet kaq speciale 💫"                            </Text>
+                            <Text style={styles.testimonialAuthor}>- Laura & Donart 💝</Text>
+                            <Text style={styles.testimonialDate}>Summer wedding 2023 🌸</Text>
                         </View>
                     </ScrollView>
                 </View>
             </View>
 
+
+            <Text style={styles.regularText}>
+                Krijojmë momente të paharrueshme. Rezervoni takimin tuaj sot..
+            </Text>
             <View style={styles.statsSection}>
                 <View style={styles.statItem}>
                     <Text style={styles.statNumber}>200+</Text>
-                    <Text style={styles.statLabel}>Weddings Captured</Text>
+                    <Text style={styles.statLabel}>Dasma të Paharrueshme</Text>
                 </View>
                 <View style={styles.statItem}>
                     <Text style={styles.statNumber}>15</Text>
-                    <Text style={styles.statLabel}>Years Experience</Text>
+                    <Text style={styles.statLabel}>Vite Eksperiencë</Text>
                 </View>
                 <View style={styles.statItem}>
-                    <Text style={styles.statNumber}>50+</Text>
-                    <Text style={styles.statLabel}>Venues Partnered</Text>
+                    <Text style={styles.statNumber}>20+</Text>
+                    <Text style={styles.statLabel}>Lokacione të Besuara</Text>
                 </View>
             </View>
 
-            <Text style={styles.regularText}>
-                Let's create timeless memories together. Book your consultation today.
-            </Text>
+
 
             <Footer />
         </ScrollView>

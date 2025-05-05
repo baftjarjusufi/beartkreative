@@ -25,7 +25,9 @@ const BackgroundPhoto = () => {
                     <Text style={styles.mainText}>BEART</Text>
                     <View style={styles.line} />
                     <Text style={styles.subText}>Photography</Text>
-                    <Text style={styles.description}>Capturing life's most precious moments with artistry and passion</Text>
+                    <Text style={styles.description}>Capturing life's most precious moments with artistry and passion... </Text>
+                    <Text style={styles.descriptione}>👰🏻🤵🏻</Text>
+
                 </View>
             </View>
         </ImageBackground>
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
     },
     bgPhoto: {
         width: '100%',
-        height: width > 768 ? height * 0.7 : height * 1.2,
+        height: width > 768 ? height * 0.7 : height * 1.5,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -92,6 +94,15 @@ const styles = StyleSheet.create({
         maxWidth: width > 768 ? '60%' : '80%',
         userSelect: 'none', // For web environments
 
+    },
+    descriptione: {
+        marginTop: 40, // pushes emoji further down
+        fontSize: width > 768 ? 64 : 52, // significantly bigger
+        lineHeight: width > 768 ? 72 : 60,
+        textAlign: 'center',
+        letterSpacing: 1,
+        maxWidth: width > 768 ? '60%' : '80%',
+        userSelect: 'none',
     },
 });
 
