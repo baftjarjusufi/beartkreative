@@ -13,7 +13,22 @@ const Home = () => {
     const [activeCard, setActiveCard] = useState(null);
     const [scrollY, setScrollY] = useState(0);
     const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
+    const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
     const testimonialScrollViewRef = useRef(null);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(Dimensions.get('window').width);
+        };
+
+        // Add event listener
+        window.addEventListener('resize', handleResize);
+
+        // Clean up
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const handleScroll = (event) => {
         setScrollY(event.nativeEvent.contentOffset.y);
@@ -250,17 +265,16 @@ const Home = () => {
         },
 
         testimonialSection: {
-            padding: width > 768 ? 100 : 40,
+            padding: windowWidth > 770 ? 100 : 40,
             backgroundColor: 'transparent',
             position: 'relative',
-            marginVertical: 100,
-
+            marginVertical: windowWidth > 770 ? 10 : 5,
         },
         testimonialWrapper: {
             backgroundColor: '#ffffff',
             borderRadius: 50,
-            padding: width > 768 ? 80 : 40,
-            margin: width > 768 ? 40 : 20,
+            padding: windowWidth > 770 ? 80 : 40,
+            margin: windowWidth > 770 ? 10 : 5,
             shadowColor: '#000',
             shadowOffset: {
                 width: 0,
@@ -385,6 +399,79 @@ const Home = () => {
             width: 40, // or whatever size you want
             height: 40,
             resizeMode: 'contain',
+        },
+        whyUsSection: {
+            padding: windowWidth > 770 ? 100 : 60,
+            backgroundColor: 'transparent',
+            position: 'relative',
+            marginVertical: windowWidth > 770 ? 10 : 5,
+        },
+        whyUsWrapper: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            borderRadius: 0,
+            padding: windowWidth > 770 ? 80 : 50,
+            margin: windowWidth > 770 ? 10 : 5,
+            borderWidth: 1,
+            borderColor: 'rgba(255, 255, 255, 0.3)',
+            borderStyle: 'solid',
+        },
+        whyUsTitle: {
+            fontSize: windowWidth > 768 ? 48 : 42,
+            color: '#ffffff',
+            textAlign: 'center',
+            marginBottom: windowWidth > 768 ? 60 : 50,
+            fontWeight: '700',
+            letterSpacing: 1.2,
+        },
+        bulletPointsContainer: {
+            flexDirection: windowWidth > 770 ? 'row' : 'column',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+            gap: windowWidth > 770 ? 20 : 60,
+            flexWrap: 'wrap',
+            maxWidth: windowWidth > 770 ? 1200 : '100%',
+            marginHorizontal: 'auto',
+        },
+        bulletPoint: {
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: windowWidth > 770 ? 15 : 25,
+            padding: windowWidth > 770 ? 15 : 0,
+            width: windowWidth > 770 ? '30%' : '100%',
+            marginHorizontal: windowWidth > 770 ? 5 : 0,
+            maxWidth: windowWidth > 770 ? 'auto' : '100%',
+            minHeight: windowWidth > 770 ? 'auto' : 120,
+            backgroundColor: 'transparent',
+        },
+        bulletPointIcon: {
+            width: windowWidth > 770 ? 40 : 70,
+            height: windowWidth > 770 ? 40 : 70,
+            tintColor: '#ffffff',
+            opacity: 0.8,
+            pointerEvents: 'none',
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
+            MozUserSelect: 'none',
+            msUserSelect: 'none',
+        },
+        bulletPointLine: {
+            width: windowWidth > 770 ? 40 : 70,
+            height: 1,
+            backgroundColor: '#ffffff',
+            marginVertical: windowWidth > 770 ? 2 : 3,
+        },
+        bulletPointText: {
+            fontSize: windowWidth > 770 ? 16 : 20,
+            color: '#ffffff',
+            textAlign: 'center',
+            whiteSpace: 'normal',
+            maxWidth: '100%',
+            paddingHorizontal: windowWidth > 770 ? 0 : 15,
+            lineHeight: windowWidth > 770 ? 'normal' : 28,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: windowWidth > 770 ? 0 : 8,
         },
     });
 
@@ -555,6 +642,97 @@ const Home = () => {
                 </View>
             </View>
 
+            <View style={styles.whyUsSection}>
+                <View style={styles.whyUsWrapper}>
+                    <Text style={styles.whyUsTitle}>Pse Beart Photography?</Text>
+                    <View style={styles.bulletPointsContainer}>
+                        <View style={styles.bulletPoint}>
+                            <Image 
+                                source={{ uri: '/camera-icon.png' }}
+                                style={styles.bulletPointIcon}
+                                resizeMode="contain"
+                                onContextMenu={(e) => e.preventDefault()}
+                                onDragStart={(e) => e.preventDefault()}
+                            />
+                            <View style={styles.bulletPointLine} />
+                            <Text style={styles.bulletPointText}>
+                                {windowWidth > 768 ? "Xhirime në dasma me Kamera 4K" : 
+                                "Xhirime në dasma me Kamera 4K\nProfesionale dhe të përsosura"}
+                            </Text>
+                        </View>
+                        <View style={styles.bulletPoint}>
+                            <Image 
+                                source={{ uri: '/communication-icon.png' }}
+                                style={styles.bulletPointIcon}
+                                resizeMode="contain"
+                                onContextMenu={(e) => e.preventDefault()}
+                                onDragStart={(e) => e.preventDefault()}
+                            />
+                            <View style={styles.bulletPointLine} />
+                            <Text style={styles.bulletPointText}>
+                                {windowWidth > 768 ? "Komunikim dhe shërbime profesionale" : 
+                                "Komunikim dhe shërbime profesionale\nPër çdo detaj të dasmës suaj"}
+                            </Text>
+                        </View>
+                        <View style={styles.bulletPoint}>
+                            <Image 
+                                source={{ uri: '/quality-icon.png' }}
+                                style={styles.bulletPointIcon}
+                                resizeMode="contain"
+                                onContextMenu={(e) => e.preventDefault()}
+                                onDragStart={(e) => e.preventDefault()}
+                            />
+                            <View style={styles.bulletPointLine} />
+                            <Text style={styles.bulletPointText}>
+                                {windowWidth > 768 ? "Kualitet kinematografik dhe rezultate te kënaqshme" : 
+                                "Kualitet kinematografik dhe rezultate te kënaqshme\nPër momente të paharrueshme"}
+                            </Text>
+                        </View>
+                        <View style={styles.bulletPoint}>
+                            <Image 
+                                source={{ uri: '/consultation-icon.png' }}
+                                style={styles.bulletPointIcon}
+                                resizeMode="contain"
+                                onContextMenu={(e) => e.preventDefault()}
+                                onDragStart={(e) => e.preventDefault()}
+                            />
+                            <View style={styles.bulletPointLine} />
+                            <Text style={styles.bulletPointText}>
+                                {windowWidth > 768 ? "Konsultime të drejtpërdrejta me klientin" : 
+                                "Konsultime të drejtpërdrejta me klientin\nPër planifikim të përsosur"}
+                            </Text>
+                        </View>
+                        <View style={styles.bulletPoint}>
+                            <Image 
+                                source={{ uri: '/script-icon.png' }}
+                                style={styles.bulletPointIcon}
+                                resizeMode="contain"
+                                onContextMenu={(e) => e.preventDefault()}
+                                onDragStart={(e) => e.preventDefault()}
+                            />
+                            <View style={styles.bulletPointLine} />
+                            <Text style={styles.bulletPointText}>
+                                {windowWidth > 768 ? "Skenar dhe planprogram për tërë mbrëmjen" : 
+                                "Skenar dhe planprogram për tërë mbrëmjen\nPër një rrjedhje të përsosur"}
+                            </Text>
+                        </View>
+                        <View style={styles.bulletPoint}>
+                            <Image 
+                                source={{ uri: '/team-icon.png' }}
+                                style={styles.bulletPointIcon}
+                                resizeMode="contain"
+                                onContextMenu={(e) => e.preventDefault()}
+                                onDragStart={(e) => e.preventDefault()}
+                            />
+                            <View style={styles.bulletPointLine} />
+                            <Text style={styles.bulletPointText}>
+                                {windowWidth > 768 ? "Ekip të gjithanshëm me shumë vite përvojë" : 
+                                "Ekip të gjithanshëm me shumë vite përvojë\nPër rezultate të garantuara"}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
 
             <Text style={styles.regularText}>
                 Krijojmë momente të paharrueshme. Rezervoni takimin tuaj sot..
