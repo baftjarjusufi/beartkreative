@@ -1,5 +1,5 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Animated} from 'react-native';
+import React, {useState} from 'react';
+import { ScrollView, StyleSheet, Animated ,TouchableWithoutFeedback, View} from 'react-native';
 
 
 
@@ -9,7 +9,6 @@ import Navbar from "./components/Navbar";// Import BlackBackground
 import Home from "./components/Home";
 
 
-import {View} from 'react-native';
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {NavigationContainer} from "@react-navigation/native";
 import Services from "./components/Services";
@@ -20,6 +19,8 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
     const scrollY = new Animated.Value(0);
+    const [menuOpen, setMenuOpen] = useState(false);
+
 
     const styles = StyleSheet.create({
         container: {
@@ -40,6 +41,13 @@ const App = () => {
         },
     };
 
+    // Function to close the menu globally when tapping outside
+    const closeMenu = (e) => {
+        if (menuOpen && !e.target.closest('.navbar') && !e.target.closest('.hamburger')) {
+            setMenuOpen(false);
+        }
+    };
+
     return (
         <ScrollView 
             contentContainerStyle={styles.container}
@@ -49,23 +57,23 @@ const App = () => {
             )}
             scrollEventThrottle={16}
         >
-            <NavigationContainer linking={linking} >
-                <Navbar scrollY={scrollY} />
-                <Stack.Navigator id={"mainNavigation"} screenOptions={{ headerShown: false }}>
-                    <Stack.Screen
-                        name="Home"
-                        component={Home}
-                    />
-                    <Stack.Screen
-                        name="Services"
-                        component={Services}
-                    />
-                    <Stack.Screen
-                        name="Contact"
-                        component={Contact}
-                    />
-                </Stack.Navigator>
-            </NavigationContainer>
+            {/* Wrap everything with TouchableWithoutFeedback */}
+            <TouchableWithoutFeedback onPress={(e) => closeMenu(e)}>
+                <View style={{ flex: 1 }}>
+                    <NavigationContainer linking={linking}>
+                        {/* Pass menuOpen and setMenuOpen to Navbar */}
+                        <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} scrollY={scrollY} />
+                        <Stack.Navigator
+                            id={'mainNavigation'}
+                            screenOptions={{ headerShown: false }}
+                        >
+                            <Stack.Screen name="Home" component={Home} />
+                            <Stack.Screen name="Services" component={Services} />
+                            <Stack.Screen name="Contact" component={Contact} />
+                        </Stack.Navigator>
+                    </NavigationContainer>
+                </View>
+            </TouchableWithoutFeedback>
         </ScrollView>
     );
 };

@@ -1,19 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-    StyleSheet,
-    View,
-    Text,
-    Dimensions,
-    TouchableOpacity,
-    Animated,
-} from 'react-native';
+import { StyleSheet, View, Text, Dimensions, TouchableOpacity, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const Navbar = () => {
+const Navbar = ({ menuOpen, setMenuOpen }) => {
     const navigation = useNavigation();
     const scrollY = useRef(new Animated.Value(0)).current;
     const [isScrolled, setIsScrolled] = useState(false);
-    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         const listener = scrollY.addListener(({ value }) => {
@@ -44,8 +36,6 @@ const Navbar = () => {
         };
     }, []);
 
-
-
     const navbarTranslateY = scrollY.interpolate({
         inputRange: [0, 50],
         outputRange: [0, -80],
@@ -53,28 +43,31 @@ const Navbar = () => {
     });
 
     return (
-        <Animated.View style={[
-            styles.navbar,
-            isMobile && styles.navbarMobile,
-            {
-                transform: [{ translateY: navbarTranslateY }],
-                backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.05)',
-            }
-        ]}>
+        <Animated.View
+            style={[
+                styles.navbar,
+                isMobile && styles.navbarMobile,
+                {
+                    transform: [{ translateY: navbarTranslateY }],
+                    backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.05)',
+                },
+            ]}
+            className="navbar"
+        >
             <TouchableOpacity onPress={() => handleLink('Home')}>
                 <Text style={[styles.logo, isMobile && styles.logoMobile]}>Beart</Text>
             </TouchableOpacity>
 
             {isMobile ? (
                 <>
-                    <TouchableOpacity onPress={() => setMenuOpen(!menuOpen)}>
+                    <TouchableOpacity onPress={() => setMenuOpen(!menuOpen)} className="hamburger">
                         <Text style={styles.hamburger}>
                             {menuOpen ? '✗' : '☰'}
                         </Text>
                     </TouchableOpacity>
 
                     {menuOpen && (
-                        <View style={styles.dropdown}>
+                        <View style={styles.dropdown} className="dropdown">
                             <TouchableOpacity onPress={() => handleLink('Home')}>
                                 <Text style={styles.navItemMobile}>Home</Text>
                             </TouchableOpacity>
@@ -104,6 +97,7 @@ const Navbar = () => {
     );
 };
 
+
 const styles = StyleSheet.create({
     navbar: {
         position: 'absolute',
@@ -122,7 +116,7 @@ const styles = StyleSheet.create({
         zIndex: 10,
     },
     navbarMobile: {
-        height: 90,
+        height: 100,
         paddingHorizontal: 15,
         paddingVertical: 10,
         justifyContent: 'space-between',
@@ -149,34 +143,53 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         letterSpacing: 1,
     },
-    navItemMobile: {
-        fontSize: 40,
-        color: '#fff',
-        paddingVertical: 30,
-        paddingHorizontal: 40,
-        textAlign: 'left',
-        alignSelf: 'flex-start',
 
-        letterSpacing: 2,
-        fontWeight: '600',
-    },
     hamburger: {
         fontSize: 60,
         color: '#fff',
         paddingHorizontal: 15,
         overflow: "visible"
     },
+
+    navItemMobile: {
+        fontSize: 45,
+        color: '#fff',
+        paddingVertical: 20,
+        paddingHorizontal: 40,
+        textAlign: 'left',
+        alignSelf: 'flex-start',
+        letterSpacing: 2,
+        fontWeight: '700',
+        transition: 'all 0.3s ease',
+    },
     dropdown: {
         position: 'absolute',
-        top: 100,
-        right: 15,
-        backgroundColor: 'rgba(51,51,51,0.45)', // semi-transparent
-        borderRadius: 24,
-        paddingVertical: 30,
-        paddingHorizontal: 30,
+        top: 120,
+        right: 30,
+        backgroundColor: 'rgba(45,45,45,0.59)',
+        borderRadius: 16,
+        paddingVertical: 40,
+        paddingHorizontal: 40,
         zIndex: 20,
-        minWidth: 220, // ensure dropdown has width
-        elevation: 5, // optional for Android shadow
+        minWidth: 500,
+        elevation: 10,
+        transition: 'transform 0.3s ease, opacity 0.3s ease',
+        boxShadow: '0 6px 20px rgba(0, 0, 0, 0.5)',
+    },
+
+    dropdownItem: {
+        color: '#fff',
+        fontSize: 22,
+        paddingVertical: 30,
+        paddingHorizontal: 40,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(255, 255, 255, 0.15)',
+        textAlign: 'left',
+    },
+
+    dropdownItemHover: {
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        transform: 'scale(1.05)',
     },
 
 });
