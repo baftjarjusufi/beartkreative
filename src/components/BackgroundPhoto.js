@@ -3,12 +3,22 @@ import { View, StyleSheet, Dimensions, ImageBackground, Text } from 'react-nativ
 
 const { width, height } = Dimensions.get('window');
 
+
+
+
 const BackgroundPhoto = () => {
+
+    const disableSave = (e) => {
+        e.preventDefault();
+    };
+
     return (
         <ImageBackground
             source={{ uri: '/test-background.png' }}
             style={styles.bgPhoto}
             resizeMode="cover"
+            onContextMenu={disableSave} // disables right-click on image
+            onTouchStart={disableSave} // disables long touch on mobile
         >
             <View style={styles.overlay}>
                 <View style={styles.textContainer}>
@@ -42,12 +52,12 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         alignItems: 'center',
-        maxWidth: '90%',
+        maxWidth: '100%',
         padding: 20,
     },
     mainText: {
         color: '#fff',
-        fontSize: width > 768 ? 72 : 56,
+        fontSize: width > 768 ? 112 : 100,
         fontWeight: '300',
         textAlign: 'center',
         letterSpacing: 8,
@@ -61,7 +71,7 @@ const styles = StyleSheet.create({
     },
     subText: {
         color: '#fff',
-        fontSize: width > 768 ? 24 : 20,
+        fontSize: width > 768 ? 36 : 34,
         fontWeight: '300',
         textAlign: 'center',
         letterSpacing: 4,
@@ -69,7 +79,7 @@ const styles = StyleSheet.create({
     },
     description: {
         color: 'rgba(255, 255, 255, 0.8)',
-        fontSize: width > 768 ? 18 : 16,
+        fontSize: width > 768 ? 32 : 30,
         textAlign: 'center',
         lineHeight: 28,
         letterSpacing: 1,

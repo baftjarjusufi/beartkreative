@@ -6,11 +6,17 @@ const Footer = () => {
         Linking.openURL('https://github.com/baftjarjusufi');
     };
 
+    const disableSave = (e) => {
+        e.preventDefault();
+    };
+
     return (
         <ImageBackground 
             source="/wave.png"
             style={styles.footer}
             resizeMode="cover"
+            onContextMenu={disableSave} // disables right-click on image
+            onTouchStart={disableSave} // disables long touch on mobile
         >
             <View style={styles.textContainer}>
                 <Text style={styles.text}>
