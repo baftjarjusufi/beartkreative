@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {Dimensions, ScrollView, StatusBar, StyleSheet} from 'react-native';
 import { Text } from 'react-native';
 import {View, SafeAreaView, Image} from 'react-native';
@@ -12,9 +12,12 @@ const Home = () => {
     const [activeCard, setActiveCard] = useState(null);
     const [scrollY, setScrollY] = useState(0);
 
+
+
     const handleScroll = (event) => {
         setScrollY(event.nativeEvent.contentOffset.y);
     };
+
 
     const cardData = {
         wedding: {
@@ -34,8 +37,12 @@ const Home = () => {
         }
     };
 
+
+
     const styles = StyleSheet.create({
         container: {
+            userSelect: 'none', // For web environments
+
             // minHeight: "100vh",
             backgroundColor: "black",
             // position: 'relative'
@@ -60,6 +67,8 @@ const Home = () => {
             zIndex: 1,
             maxWidth: width > 768 ? 1600 : '100%',
             marginHorizontal: 'auto',
+            userSelect: 'none', // For web environments
+
         },
         cardBackground: {
             position: 'absolute',
@@ -82,6 +91,8 @@ const Home = () => {
             shadowOffset: {
                 width: 0,
                 height: 2,
+                userSelect: 'none', // For web environments
+
             },
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
@@ -93,6 +104,8 @@ const Home = () => {
             alignItems: 'center',
             alignSelf: 'center',
             position: 'relative',
+            userSelect: 'none', // For web environments
+
         },
         cardArrow: {
             position: 'absolute',
@@ -105,6 +118,8 @@ const Home = () => {
             zIndex: 2,
             flexDirection: 'row',
             alignItems: 'center',
+            userSelect: 'none', // For web environments
+
         },
         clickMeText: {
             position: 'absolute',
@@ -115,6 +130,8 @@ const Home = () => {
             fontStyle: 'italic',
             opacity: 0.8,
             transition: 'all 0.4s ease-in-out',
+            userSelect: 'none', // For web environments
+
         },
         activeCardArrow: {
             transform: [{rotate: '225deg'}],
@@ -141,6 +158,8 @@ const Home = () => {
             textAlign: 'center',
             width: '100%',
             transition: 'color 0.4s ease-in-out',
+            userSelect: 'none', // For web environments
+
         },
         cardText: {
             fontSize: width > 768 ? 20 : 24,
@@ -152,11 +171,15 @@ const Home = () => {
             paddingHorizontal: width > 768 ? 0 : 10,
             width: '100%',
             maxWidth: '90%',
+            userSelect: 'none', // For web environments
+
         },
         activeCardTitle: {
             color: '#ffffff',
             fontSize: width > 768 ? 32 : 36,
             textAlign: 'center',
+            userSelect: 'none', // For web environments
+
         },
         activeCardText: {
             color: '#e0e0e0',
@@ -164,6 +187,8 @@ const Home = () => {
             lineHeight: width > 768 ? 32 : 40,
             textAlign: 'center',
             maxWidth: '90%',
+            userSelect: 'none', // For web environments
+
         },
         regularText: {
             fontSize: 16,
@@ -173,12 +198,17 @@ const Home = () => {
             marginBottom: 40,
             textAlign: 'center',
             letterSpacing: 0.3,
+            userSelect: 'none', // For web environments
+
         },
+
         testimonialSection: {
             padding: width > 768 ? 100 : 40,
             backgroundColor: 'transparent',
             position: 'relative',
             marginVertical: 100,
+            userSelect: 'none', // For web environments
+
         },
         testimonialWrapper: {
             backgroundColor: '#ffffff',
@@ -201,6 +231,8 @@ const Home = () => {
             marginBottom: width > 768 ? 60 : 80,
             fontWeight: '700',
             letterSpacing: 1.2,
+            userSelect: 'none', // For web environments
+
         },
         testimonialScrollContainer: {
             paddingHorizontal: width > 768 ? 80 : 40,
@@ -239,6 +271,8 @@ const Home = () => {
             letterSpacing: 0.8,
             maxWidth: width > 768 ? '85%' : '90%',
             alignSelf: 'center',
+            userSelect: 'none', // For web environments
+
         },
         testimonialAuthor: {
             fontSize: width > 768 ? 24 : 18,
@@ -247,12 +281,16 @@ const Home = () => {
             fontWeight: '600',
             marginBottom: width > 768 ? 12 : 8,
             letterSpacing: 1,
+            userSelect: 'none', // For web environments
+
         },
         testimonialDate: {
             fontSize: width > 768 ? 18 : 14,
             color: 'rgba(255, 255, 255, 0.7)',
             textAlign: 'center',
             letterSpacing: 0.5,
+            userSelect: 'none', // For web environments
+
         },
         statsSection: {
             flexDirection: width > 768 ? 'row' : 'column',
@@ -260,6 +298,8 @@ const Home = () => {
             alignItems: 'center',
             padding: width > 768 ? 80 : 40,
             gap: 40,
+            userSelect: 'none', // For web environments
+
         },
         statItem: {
             alignItems: 'center',
@@ -269,6 +309,8 @@ const Home = () => {
             color: '#ffffff',
             fontWeight: 'bold',
             marginBottom: 10,
+            userSelect: 'none', // For web environments
+
         },
         statLabel: {
             fontSize: width > 768 ? 18 : 16,
@@ -283,6 +325,8 @@ const Home = () => {
             flexDirection: 'row', // <-- image and text side by side
             justifyContent: 'center',
             alignItems: 'center',
+            userSelect: 'none', // For web environments
+
         },
 
         swipeMeText: {
@@ -291,6 +335,8 @@ const Home = () => {
             color: '#333333',
             fontStyle: 'italic',
             marginLeft: 10, // space between image and text
+            userSelect: 'none', // For web environments
+
         },
 
         iphoneIcon: {
@@ -302,15 +348,14 @@ const Home = () => {
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <View>
-                {/* <Navbar /> */}
-            </View>
+
 
             <View style={styles.bgContainer}>
                 <BackgroundPhoto />
             </View>
 
             <View style={styles.cardContainer}>
+
                 <View style={styles.cardBackground} />
                 <View
                     style={[

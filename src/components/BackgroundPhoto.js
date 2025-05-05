@@ -54,6 +54,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         maxWidth: '100%',
         padding: 20,
+        userSelect: 'none', // For web environments
+
     },
     mainText: {
         color: '#fff',
@@ -62,6 +64,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         letterSpacing: 8,
         marginBottom: 10,
+        userSelect: 'none', // For web environments
+
     },
     line: {
         width: width > 768 ? 200 : 150,
@@ -76,6 +80,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         letterSpacing: 4,
         marginBottom: 20,
+        userSelect: 'none', // For web environments
+
     },
     description: {
         color: 'rgba(255, 255, 255, 0.8)',
@@ -84,6 +90,8 @@ const styles = StyleSheet.create({
         lineHeight: 28,
         letterSpacing: 1,
         maxWidth: width > 768 ? '60%' : '80%',
+        userSelect: 'none', // For web environments
+
     },
 });
 

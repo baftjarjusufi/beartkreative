@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         textAlign: 'center',
+        userSelect: 'none', // For web environments
+
     },
     link: {
         color: '#000',

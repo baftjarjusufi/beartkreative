@@ -68,7 +68,9 @@ const Navbar = () => {
             {isMobile ? (
                 <>
                     <TouchableOpacity onPress={() => setMenuOpen(!menuOpen)}>
-                        <Text style={styles.hamburger}>☰</Text>
+                        <Text style={styles.hamburger}>
+                            {menuOpen ? '✗' : '☰'}
+                        </Text>
                     </TouchableOpacity>
 
                     {menuOpen && (
@@ -162,6 +164,7 @@ const styles = StyleSheet.create({
         fontSize: 60,
         color: '#fff',
         paddingHorizontal: 15,
+        overflow: "visible"
     },
     dropdown: {
         position: 'absolute',
