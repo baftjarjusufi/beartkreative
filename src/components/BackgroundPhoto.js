@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     },
     bgPhoto: {
         width: '100%',
-        height: width > 768 ? height * 0.9 : height * 1.5,
+        height: width > 768 ? height * 0.9 : height * 1.6,
         justifyContent: 'center',
         alignItems: 'center',
     },
