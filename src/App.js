@@ -11,8 +11,8 @@ import Home from "./components/Home";
 
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {NavigationContainer} from "@react-navigation/native";
-import Services from "./components/Services";
 import Contact from "./components/Contact";
+import Gallery from "./components/Gallery";
 
 
 const Stack = createNativeStackNavigator();
@@ -35,7 +35,7 @@ const App = () => {
         config: {
             screens: {
                 Home: '/',
-                Services: 'services',
+                Gallery: 'gallery',
                 Contact: 'contact',
             },
         },
@@ -68,7 +68,7 @@ const App = () => {
                             screenOptions={{ headerShown: false }}
                         >
                             <Stack.Screen name="Home" component={Home} />
-                            <Stack.Screen name="Services" component={Services} />
+                            <Stack.Screen name="Gallery" component={Gallery} />
                             <Stack.Screen name="Contact" component={Contact} />
                         </Stack.Navigator>
                     </NavigationContainer>

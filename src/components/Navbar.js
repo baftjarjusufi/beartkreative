@@ -71,8 +71,8 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
                             <TouchableOpacity onPress={() => handleLink('Home')}>
                                 <Text style={styles.navItemMobile}>Home</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => handleLink('Services')}>
-                                <Text style={styles.navItemMobile}>Services</Text>
+                            <TouchableOpacity onPress={() => handleLink('Gallery')}>
+                                <Text style={styles.navItemMobile}>Gallery</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => handleLink('Contact')}>
                                 <Text style={styles.navItemMobile}>Contact</Text>
@@ -85,8 +85,8 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
                     <TouchableOpacity onPress={() => handleLink('Home')}>
                         <Text style={styles.navItem}>Home</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleLink('Services')}>
-                        <Text style={styles.navItem}>Services</Text>
+                    <TouchableOpacity onPress={() => handleLink('Gallery')}>
+                        <Text style={styles.navItem}>Gallery</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleLink('Contact')}>
                         <Text style={styles.navItem}>Contact</Text>
