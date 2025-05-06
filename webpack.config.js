@@ -62,6 +62,8 @@ module.exports = {
         }),
     ],
     devServer: {
+        historyApiFallback: true,  // This line makes sure React Router works on refresh
+
         static: [
             path.join(__dirname, 'dist'),
             path.join(__dirname, 'public'), // Serve static files from the public folder
