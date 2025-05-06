@@ -434,7 +434,7 @@ const Home = () => {
             marginHorizontal: 'auto',
         },
         bulletPoint: {
-            flexDirection: 'column',
+            flexDirection:'column',
             alignItems: 'center',
             gap: windowWidth > 770 ? 15 : 25,
             padding: windowWidth > 770 ? 15 : 0,
@@ -568,6 +568,102 @@ const Home = () => {
                 </View>
             </View>
 
+            <View style={styles.whyUsSection}>
+                <View style={styles.whyUsWrapper}>
+                    <Text style={styles.whyUsTitle}>Pse Beart Photography?</Text>
+                    <View style={styles.bulletPointsContainer}>
+
+                        <View style={styles.bulletPoint}>
+                            <Image
+                                source={require('../assets/images/camera-icon.png')}
+                                style={styles.bulletPointIcon}
+                                resizeMode="contain"
+                                onContextMenu={(e) => e.preventDefault()}
+                                onDragStart={(e) => e.preventDefault()}
+                            />
+                            <View style={styles.bulletPointLine} />
+                            <Text style={styles.bulletPointText}>
+                                {windowWidth > 768 ? "Xhirime Profesionale në dasma me Kamera 4K " :
+                                    "Xhirime Profesionale në dasma me Kamera 4K "}
+                            </Text>
+                        </View>
+
+                        <View style={styles.bulletPoint}>
+                            <Image
+                                source={require('../assets/images/quality-icon.png')}
+                                style={styles.bulletPointIcon}
+                                resizeMode="contain"
+                                onContextMenu={(e) => e.preventDefault()}
+                                onDragStart={(e) => e.preventDefault()}
+                            />
+                            <View style={styles.bulletPointLine} />
+                            <Text style={styles.bulletPointText}>
+                                {windowWidth > 768 ? "Kualitet kinematografik dhe momente të paharrueshme" :
+                                    "Kualitet kinematografik dhe momente të paharrueshme "}
+                            </Text>
+                        </View>
+                        <View style={styles.bulletPoint}>
+                            <Image
+                                source={require('../assets/images/communication-icon.png')}
+                                style={styles.bulletPointIcon}
+                                resizeMode="contain"
+                                onContextMenu={(e) => e.preventDefault()}
+                                onDragStart={(e) => e.preventDefault()}
+                            />
+                            <View style={styles.bulletPointLine} />
+                            <Text style={styles.bulletPointText}>
+                                {windowWidth > 768 ? "Komunikim dhe shërbime profesionale Për çdo detaj të dasmës suaj" :
+                                    "Komunikim dhe shërbime profesionalen Për çdo detaj të dasmës suaj"}
+                            </Text>
+                        </View>
+
+                        <View style={styles.bulletPoint}>
+                            <Image
+                                source={require('../assets/images/consultation-icon.png')}
+                                style={styles.bulletPointIcon}
+                                resizeMode="contain"
+                                onContextMenu={(e) => e.preventDefault()}
+                                onDragStart={(e) => e.preventDefault()}
+                            />
+                            <View style={styles.bulletPointLine} />
+                            <Text style={styles.bulletPointText}>
+                                {windowWidth > 768 ? "Konsultime të drejtpërdrejta me klientin Për planifikim të përsosur" :
+                                    "Konsultime të drejtpërdrejta me klientin Për planifikim të përsosur"}
+                            </Text>
+                        </View>
+                        <View style={styles.bulletPoint}>
+                            <Image
+                                source={require('../assets/images/script-icon.png')}
+                                style={styles.bulletPointIcon}
+                                resizeMode="contain"
+                                onContextMenu={(e) => e.preventDefault()}
+                                onDragStart={(e) => e.preventDefault()}
+                            />
+                            <View style={styles.bulletPointLine} />
+                            <Text style={styles.bulletPointText}>
+                                {windowWidth > 768 ? "Planprogram për tërë mbrëmjen për një ditë të përsosur" :
+                                    "Planprogram për tërë mbrëmjen për një ditë të përsosur"}
+                            </Text>
+                        </View>
+                        <View style={styles.bulletPoint}>
+                            <Image
+                                source={require('../assets/images/team-icon.png')}
+                                style={styles.bulletPointIcon}
+                                resizeMode="contain"
+                                onContextMenu={(e) => e.preventDefault()}
+                                onDragStart={(e) => e.preventDefault()}
+                            />
+                            <View style={styles.bulletPointLine} />
+                            <Text style={styles.bulletPointText}>
+                                {windowWidth > 768 ? "Ekip të gjithanshëm me shumë vite përvojë" :
+                                    "Ekip të gjithanshëm me shumë vite përvojë"}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
+
+
 
             <View style={styles.testimonialSection}>
                 <View style={styles.testimonialWrapper}>
@@ -642,97 +738,7 @@ const Home = () => {
                 </View>
             </View>
 
-            <View style={styles.whyUsSection}>
-                <View style={styles.whyUsWrapper}>
-                    <Text style={styles.whyUsTitle}>Pse Beart Photography?</Text>
-                    <View style={styles.bulletPointsContainer}>
-                        <View style={styles.bulletPoint}>
-                            <Image 
-                                source={{ uri: '/camera-icon.png' }}
-                                style={styles.bulletPointIcon}
-                                resizeMode="contain"
-                                onContextMenu={(e) => e.preventDefault()}
-                                onDragStart={(e) => e.preventDefault()}
-                            />
-                            <View style={styles.bulletPointLine} />
-                            <Text style={styles.bulletPointText}>
-                                {windowWidth > 768 ? "Xhirime në dasma me Kamera 4K" : 
-                                "Xhirime në dasma me Kamera 4K\nProfesionale dhe të përsosura"}
-                            </Text>
-                        </View>
-                        <View style={styles.bulletPoint}>
-                            <Image 
-                                source={{ uri: '/communication-icon.png' }}
-                                style={styles.bulletPointIcon}
-                                resizeMode="contain"
-                                onContextMenu={(e) => e.preventDefault()}
-                                onDragStart={(e) => e.preventDefault()}
-                            />
-                            <View style={styles.bulletPointLine} />
-                            <Text style={styles.bulletPointText}>
-                                {windowWidth > 768 ? "Komunikim dhe shërbime profesionale" : 
-                                "Komunikim dhe shërbime profesionale\nPër çdo detaj të dasmës suaj"}
-                            </Text>
-                        </View>
-                        <View style={styles.bulletPoint}>
-                            <Image 
-                                source={{ uri: '/quality-icon.png' }}
-                                style={styles.bulletPointIcon}
-                                resizeMode="contain"
-                                onContextMenu={(e) => e.preventDefault()}
-                                onDragStart={(e) => e.preventDefault()}
-                            />
-                            <View style={styles.bulletPointLine} />
-                            <Text style={styles.bulletPointText}>
-                                {windowWidth > 768 ? "Kualitet kinematografik dhe rezultate te kënaqshme" : 
-                                "Kualitet kinematografik dhe rezultate te kënaqshme\nPër momente të paharrueshme"}
-                            </Text>
-                        </View>
-                        <View style={styles.bulletPoint}>
-                            <Image 
-                                source={{ uri: '/consultation-icon.png' }}
-                                style={styles.bulletPointIcon}
-                                resizeMode="contain"
-                                onContextMenu={(e) => e.preventDefault()}
-                                onDragStart={(e) => e.preventDefault()}
-                            />
-                            <View style={styles.bulletPointLine} />
-                            <Text style={styles.bulletPointText}>
-                                {windowWidth > 768 ? "Konsultime të drejtpërdrejta me klientin" : 
-                                "Konsultime të drejtpërdrejta me klientin\nPër planifikim të përsosur"}
-                            </Text>
-                        </View>
-                        <View style={styles.bulletPoint}>
-                            <Image 
-                                source={{ uri: '/script-icon.png' }}
-                                style={styles.bulletPointIcon}
-                                resizeMode="contain"
-                                onContextMenu={(e) => e.preventDefault()}
-                                onDragStart={(e) => e.preventDefault()}
-                            />
-                            <View style={styles.bulletPointLine} />
-                            <Text style={styles.bulletPointText}>
-                                {windowWidth > 768 ? "Skenar dhe planprogram për tërë mbrëmjen" : 
-                                "Skenar dhe planprogram për tërë mbrëmjen\nPër një rrjedhje të përsosur"}
-                            </Text>
-                        </View>
-                        <View style={styles.bulletPoint}>
-                            <Image 
-                                source={{ uri: '/team-icon.png' }}
-                                style={styles.bulletPointIcon}
-                                resizeMode="contain"
-                                onContextMenu={(e) => e.preventDefault()}
-                                onDragStart={(e) => e.preventDefault()}
-                            />
-                            <View style={styles.bulletPointLine} />
-                            <Text style={styles.bulletPointText}>
-                                {windowWidth > 768 ? "Ekip të gjithanshëm me shumë vite përvojë" : 
-                                "Ekip të gjithanshëm me shumë vite përvojë\nPër rezultate të garantuara"}
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-            </View>
+
 
             <Text style={styles.regularText}>
                 Krijojmë momente të paharrueshme. Rezervoni takimin tuaj sot..

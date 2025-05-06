@@ -11,8 +11,8 @@ const Footer = () => {
     };
 
     return (
-        <ImageBackground 
-            source="/wave.png"
+        <ImageBackground
+            source={require('../assets/images/wave.png')}
             style={styles.footer}
             resizeMode="cover"
             onContextMenu={disableSave} // disables right-click on image

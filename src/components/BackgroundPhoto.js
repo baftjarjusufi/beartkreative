@@ -14,7 +14,7 @@ const BackgroundPhoto = () => {
 
     return (
         <ImageBackground
-            source={{ uri: '/test-background.png' }}
+            source={require('../assets/images/test-background.png')}
             style={styles.bgPhoto}
             resizeMode="cover"
             onContextMenu={disableSave} // disables right-click on image
@@ -26,7 +26,6 @@ const BackgroundPhoto = () => {
                     <View style={styles.line} />
                     <Text style={styles.subText}>Photography</Text>
                     <Text style={styles.description}>Capturing life's most precious moments with artistry and passion... </Text>
-                    <Text style={styles.descriptione}>👰🏻🤵🏻</Text>
 
                 </View>
             </View>
@@ -95,15 +94,7 @@ const styles = StyleSheet.create({
         userSelect: 'none', // For web environments
 
     },
-    descriptione: {
-        marginTop: 40, // pushes emoji further down
-        fontSize: width > 768 ? 64 : 52, // significantly bigger
-        lineHeight: width > 768 ? 72 : 60,
-        textAlign: 'center',
-        letterSpacing: 1,
-        maxWidth: width > 768 ? '60%' : '80%',
-        userSelect: 'none',
-    },
+
 });
 
 export default BackgroundPhoto
