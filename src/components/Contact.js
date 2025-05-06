@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
 import Navbar from './Navbar'; // Adjust the path if needed
 
-export default function Contact() {
+const Contact= () => {
     return (
         <View style={styles.container}>
             <Navbar />
@@ -28,3 +28,4 @@ const styles = StyleSheet.create({
         color: 'white',
     },
 });
+export default Contact;
