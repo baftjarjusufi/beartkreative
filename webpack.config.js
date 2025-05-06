@@ -1,13 +1,13 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin'); // ⬅️ Add this line
+const CopyPlugin = require('copy-webpack-plugin'); // Add this line
 
 module.exports = {
     entry: './src/index.js',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '/', // ⬅️ This helps avoid 404s with routing/assets
+        publicPath: '/', // This helps avoid 404s with routing/assets
     },
     resolve: {
         alias: {
@@ -34,10 +34,12 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
-                type: 'asset/resource',
-             },
+                type: 'asset/resource',  // Bundles images into static/media/
+                generator: {
+                    filename: 'static/media/[name].[hash][ext][query]',  // Optimizes image names
+                },
+            },
         ],
-
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -46,11 +48,15 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 {
-                    from: 'public',
-                    to: '.',
+                    from: 'public',  // Copy everything from the public folder
+                    to: '.',  // Copy to the root of dist
                     globOptions: {
-                        ignore: ['**/index.html'], // ✅ Prevents conflict with HtmlWebpackPlugin
+                        ignore: ['**/index.html'], // Prevents conflict with HtmlWebpackPlugin
                     },
+                },
+                {
+                    from: 'src/assets/images',  // Copy everything from src/assets/images
+                    to: 'assets/images',  // Copy to assets/images in dist
                 },
             ],
         }),
@@ -61,6 +67,5 @@ module.exports = {
             path.join(__dirname, 'public'), // Serve static files from the public folder
         ],
         port: 3000,
-
     },
 };
