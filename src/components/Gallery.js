@@ -28,6 +28,10 @@ const Gallery = () => {
 
     const [imageDimensions, setImageDimensions] = useState([]);
 
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseEnter = () => setIsHovered(true);
+    const handleMouseLeave = () => setIsHovered(false);
 
     const imageArray = [TestImage1, TestImage2, TestImage3];
 
@@ -87,9 +91,29 @@ const Gallery = () => {
         trackMouse: true,
     });
 
+    const handleTouchStart = () => {
+        if (!isMobile) {
+            setIsHovered(true);  // Enable hover effect for desktop
+        }
+    };
 
+    const handleTouchEnd = () => {
+        if (!isMobile) {
+            setIsHovered(false); // Disable hover effect when touch ends on desktop
+        }
+    };
 
+    const [currentStep, setCurrentStep] = useState(0); // Keeps track of which tutorial step we are on
+    const [tutorialModalVisible, setTutorialModalVisible] = useState(true); // Tutorial modal visibility
 
+    // Function to go to the next tutorial step
+    const nextStep = () => {
+        if (currentStep < 2) {
+            setCurrentStep(currentStep + 1);
+        } else {
+            setTutorialModalVisible(false); // Close the tutorial after the last step
+        }
+    };
     return (
 
         <View style={styles.container}>
@@ -102,11 +126,21 @@ const Gallery = () => {
                         <TouchableOpacity
                             key={index}
                             onPress={() => handleImageClick(index)}
-                            style={[styles.imageWrapper, isMobile ? styles.imageMobile : styles.imageDesktop]}
+                            style={[styles.imageWrapper,
+                                isMobile ? styles.imageMobile : styles.imageDesktop,
+                                isHovered ? styles.imageHovered : null,
+
+
+                            ]}
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                            onTouchStart={handleTouchStart}  // Add touch event for mobile
+                            onTouchEnd={handleTouchEnd}
                         >
                             <Image
                                 source={image}
-                                style={styles.image}
+                                style={[styles.image,
+                                    isHovered ? styles.imageTilt : null,]}
                                 resizeMode="cover"
                                 onContextMenu={disableSave}
                                 onTouchStart={disableSave} // disables long touch on mobile
@@ -134,23 +168,56 @@ const Gallery = () => {
 
                                 <View style={styles.navigationButtons}>
                                     <TouchableOpacity onPress={handlePrevImage} style={styles.navButton}>
-                                        <Text style={styles.navButtonText}>Prev</Text>
+                                        <Text style={styles.navButtonText}>{"<"}</Text>
                                     </TouchableOpacity>
+
                                     <TouchableOpacity onPress={handleNextImage} style={styles.navButton}>
-                                        <Text style={styles.navButtonText}>Next</Text>
+                                        <Text style={styles.navButtonText}>{">"}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
                         </View>
                     </Modal>
                 )}
+
+                {/* Tutorial Modal */}
+                {tutorialModalVisible && (
+                    <Modal transparent={true} visible={tutorialModalVisible} onRequestClose={() => setTutorialModalVisible(false)}>
+                        <View style={styles.modalContainer}>
+                            <View style={styles.tutorialModal}>
+                                {currentStep === 0 && (
+                                    <Text style={styles.tutorialText}>Hi,Klikoni mbi një foto për ta parë të plotë!! :)</Text>
+                                )}
+                                {currentStep === 1 && (
+                                    <Text style={styles.tutorialText}>Swipe majtas ose djathtas për të lëvizur nëpër fotografi.</Text>
+                                )}
+                                {currentStep === 2 && (
+                                    <Text style={styles.tutorialText}>Kaq ishte! Shijojeni fotot e galerisë!!</Text>
+                                )}
+
+                                <TouchableOpacity style={styles.nextButton} onPress={nextStep}>
+                                    <Text style={styles.nextButtonText}>Next</Text>
+                                </TouchableOpacity>
+
+
+
+
+                            </View>
+                            <TouchableOpacity onPress={() => setTutorialModalVisible(false)}>
+                                <Text style={styles.skipText}>Skip Tutorial</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </Modal>
+                )}
+
+                <Footer />
+
             </ScrollView>
 
             {/* Go to Top button */}
             <TouchableOpacity style={styles.goToTopButton} onPress={scrollToTop}>
                 <Text style={styles.goToTopText}>↑</Text>
             </TouchableOpacity>
-
 
         </View>
 
@@ -187,23 +254,41 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         overflow: 'hidden',
         margin: 40,
+        border: '5px solid white', // Always white border
+        transition: 'border 0.3s ease', // Smooth transition for the border
+
     },
     imageDesktop: {
         width: 600,
         height: 450,
+
     },
     imageMobile: {
         width: '95%',
         height: 500,
         userSelect: 'none', // Disable text selection for web
 
+
+
     },
     image: {
         width: '100%',
         height: '100%',
         userSelect: 'none', // Disable text selection for web
+        transition: 'transform 0.5s ease',
 
     },
+    imageHovered: {
+        // Optional: Slight zoom on hover
+        transform: 'scale(1.05)',
+        border: '5px transparent #fff',  // Make the border white on hover
+    },
+    imageTilt: {
+        transform: 'rotateX(20deg) rotateY(20deg)', // Tilt effect
+        border: '5px solid #fff',  // Make the border white on hover
+
+    },
+
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
@@ -242,15 +327,19 @@ const styles = StyleSheet.create({
         top: 20,  // Keep the button fixed at the top-right corner
         right: 20,
         padding: 30,
-        backgroundColor: 'rgba(223, 223, 223, 0.5)',  // Keep transparent but slightly visible
+        backgroundColor: 'transparent',  // Keep transparent but slightly visible
         borderRadius: 5,
         zIndex: 2,
     },
     closeText: {
-        fontSize: 32,
+        fontSize: 50,
         color: 'black',
         fontWeight: 'bold',
         userSelect: 'none', // Disable text selection for web
+
+        WebkitTextStroke: '3px white',  // Stroke the text
+        WebkitTextFillColor: 'black',
+
 
     },
     navigationButtons: {
@@ -259,24 +348,29 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         userSelect: 'none', // Disable text selection for web
 
     },
     navButton: {
-        backgroundColor: 'rgba(223, 223, 223, 0.5)',
+        backgroundColor: 'transparent',
         padding: 30,
         borderRadius: 5,
         userSelect: 'none', // Disable text selection for web
 
     },
     navButtonText: {
-        fontSize: 32,
+        fontSize: 50,
         color: 'black',
         fontWeight: 'bold',
         userSelect: 'none', // Disable text selection for web
+        WebkitTextStroke: '3px white',  // Stroke the text
+        WebkitTextFillColor: 'black',  // Fill the text with black
+
 
     },
+
+
     goToTopButton: {
         position: 'absolute',
         bottom: '12%',  // Percentage-based to adapt to screen size
@@ -291,6 +385,49 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
     },
+
+    // Tutorial Modal
+    tutorialModal: {
+        padding: 100,
+        backgroundColor: 'white',
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width:'80%', maxWidth:500,
+        height:"auto",
+    },
+    tutorialText: {
+        fontSize: 40,
+        color: 'black',
+        marginBottom: 60,
+        textAlign: 'center',
+        lineHeight: 60,
+    },
+    nextButton: {
+        backgroundColor: 'black',
+        paddingVertical: 40,
+        paddingHorizontal: 40,
+        borderRadius: 20,
+        marginTop: 30,
+        outline:'none',
+        borderWidth:0,
+    },
+    nextButtonText: {
+        color: 'white',
+        fontWeight: 'bold' ,
+        fontSize: 18,
+    },
+    skipText: {
+        marginTop: 20,
+        color: 'white',
+        fontSize: 40,
+
+        textAlign: 'center',
+    },
+
+
+
+
 });
 
 export default Gallery;

@@ -98,6 +98,7 @@ const Home = () => {
 
     const styles = StyleSheet.create({
         container: {
+
             userSelect: 'none', // For web environments
 
             // minHeight: "100vh",
@@ -473,6 +474,8 @@ const Home = () => {
             flexDirection: 'column',
             gap: windowWidth > 770 ? 0 : 8,
         },
+
+
     });
 
     return (

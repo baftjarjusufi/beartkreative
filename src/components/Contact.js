@@ -1,16 +1,19 @@
 import React from 'react';
-import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
-import Navbar from './Navbar'; // Adjust the path if needed
+import {View, Text, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import Navbar from './Navbar';
+import Footer from "./Footer"; // Adjust the path if needed
 
 const Contact= () => {
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <Navbar />
             <View style={styles.content}>
                 <Text style={styles.title}>Our Contact</Text>
                 {/* Add contact info here */}
             </View>
-        </View>
+
+            <Footer />
+        </ScrollView>
     );
 }
 
