@@ -185,27 +185,16 @@ const Gallery = () => {
                     <Modal transparent={true} visible={tutorialModalVisible} onRequestClose={() => setTutorialModalVisible(false)}>
                         <View style={styles.modalContainer}>
                             <View style={styles.tutorialModal}>
-                                {currentStep === 0 && (
-                                    <Text style={styles.tutorialText}>Hi,Klikoni mbi një foto për ta parë të plotë!! :)</Text>
-                                )}
-                                {currentStep === 1 && (
-                                    <Text style={styles.tutorialText}>Swipe majtas ose djathtas për të lëvizur nëpër fotografi.</Text>
-                                )}
-                                {currentStep === 2 && (
-                                    <Text style={styles.tutorialText}>Kaq ishte! Shijojeni fotot e galerisë!!</Text>
-                                )}
+                                    <Text style={styles.tutorialText}>
+                                        Klikoni mbi një foto, Swipe majtas ose djathtas për të lëvizur nëpër fotografi.
+                                    </Text>
 
-                                <TouchableOpacity style={styles.nextButton} onPress={nextStep}>
-                                    <Text style={styles.nextButtonText}>Next</Text>
+
+                                <TouchableOpacity style={styles.nextButton} onPress={() => setTutorialModalVisible(false)}>
+                                    <Text style={styles.nextButtonText}>Okay</Text>
                                 </TouchableOpacity>
 
-
-
-
                             </View>
-                            <TouchableOpacity onPress={() => setTutorialModalVisible(false)}>
-                                <Text style={styles.skipText}>Skip Tutorial</Text>
-                            </TouchableOpacity>
                         </View>
                     </Modal>
                 )}
@@ -417,13 +406,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold' ,
         fontSize: 18,
     },
-    skipText: {
-        marginTop: 20,
-        color: 'white',
-        fontSize: 40,
 
-        textAlign: 'center',
-    },
 
 
 
