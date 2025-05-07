@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
     navLinks: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent:'space-between',
     },
     navItem: {
         color: '#fff',
@@ -142,6 +143,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         textTransform: 'uppercase',
         letterSpacing: 1,
+
+
     },
 
     hamburger: {

@@ -114,12 +114,20 @@ const Gallery = () => {
             setTutorialModalVisible(false); // Close the tutorial after the last step
         }
     };
+
     return (
 
         <View style={styles.container}>
             <Navbar />
             <ScrollView ref={scrollViewRef} contentContainerStyle={styles.content}>
                 <Text style={styles.title}>Our Gallery</Text>
+
+                <Text style={styles.introductionText}>
+                     Këtu janë disa nga momentet tona të preferuara të kapura përmes kamerës sonë.
+                    {'\n'}Klikoni çdo foto për ta parë atë në detaje.
+                </Text>
+
+                <View style={styles.linetest}></View>
 
                 <View style={styles.galleryGrid}>
                     {imageArray.map((image, index) => (
@@ -227,7 +235,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        fontSize: 28,
+        fontSize: 60,
         color: 'white',
         marginTop: 40,
         marginBottom: 80,
@@ -238,6 +246,21 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         justifyContent: 'center',
         width: '100%',
+    },
+    introductionText: {
+        fontSize: 40,  // Adjust font size for mobile
+        color: 'white',
+        marginBottom: 40,  // Space between text and images
+        textAlign: 'center',
+        paddingHorizontal: 20,
+        lineHeight: 60,
+    },
+    linetest: {
+        width: '60%',
+        height: 2,
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        alignSelf: 'center',
+        marginTop: 10,
     },
     imageWrapper: {
         borderRadius: 10,
@@ -386,18 +409,18 @@ const styles = StyleSheet.create({
         height:"auto",
     },
     tutorialText: {
-        fontSize: 40,
+        fontSize: 36,
         color: 'black',
-        marginBottom: 60,
+        marginBottom: 25,
         textAlign: 'center',
-        lineHeight: 60,
+        lineHeight: 50,
+
     },
     nextButton: {
         backgroundColor: 'black',
-        paddingVertical: 40,
+        paddingVertical: 30,
         paddingHorizontal: 40,
         borderRadius: 20,
-        marginTop: 30,
         outline:'none',
         borderWidth:0,
     },
