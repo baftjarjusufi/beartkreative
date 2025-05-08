@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import {
     View,
     Text,
@@ -7,12 +7,14 @@ import {
     Modal,
     TouchableOpacity,
     useWindowDimensions,
+    FlatList,
 } from 'react-native';
 import Navbar from './Navbar';
-import { ScrollView } from 'react-native-web';
 import galleryImages from "./galleryImages";
 import Footer from "./Footer";
 import { useSwipeable } from "react-swipeable";
+import debounce from 'lodash.debounce';  // Ensure lodash.debounce is imported
+
 
 const Gallery = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -21,7 +23,7 @@ const Gallery = () => {
     const scrollViewRef = useRef(null);
     const [isHovered, setIsHovered] = useState(false);
     const [loadedImages, setLoadedImages] = useState(5); // Initially load 5 images
-    const imagesPerLoad = 5; // Number of images to load at once
+    const imagesPerLoad = 2; // Number of images to load at once
 
     const imageArray = galleryImages;
 
@@ -53,16 +55,25 @@ const Gallery = () => {
         }
     };
 
-    const handleScroll = (event) => {
-        const contentHeight = event.nativeEvent.contentSize.height;
-        const contentOffsetY = event.nativeEvent.contentOffset.y;
-        const visibleHeight = event.nativeEvent.layoutMeasurement.height;
-
-        // If the user has scrolled to the bottom (near the last image), load more images
-        if (contentOffsetY + visibleHeight >= contentHeight - 100) {
-            setLoadedImages(prev => prev + imagesPerLoad);
-        }
+    // Lazy load more images when scrolling reaches the end
+    const handleEndReached = () => {
+        setLoadedImages(prev => prev + imagesPerLoad);
     };
+
+    // The handleScroll function with debounce and useCallback
+    const handleScroll = useCallback(
+        debounce((event) => {
+            const contentHeight = event.nativeEvent.contentSize.height;
+            const contentOffsetY = event.nativeEvent.contentOffset.y;
+            const visibleHeight = event.nativeEvent.layoutMeasurement.height;
+
+            // Lazy load images when user scrolls near the end
+            if (contentOffsetY + visibleHeight >= contentHeight - 100) {
+                setLoadedImages((prev) => prev + imagesPerLoad);
+            }
+        }, 200),  // 200ms debounce delay
+        [] // Empty dependency array so this callback does not change on re-renders
+    );
 
     const isMobile = width <= 600;
 
@@ -76,71 +87,99 @@ const Gallery = () => {
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
 
+    const [currentStep, setCurrentStep] = useState(0); // Keeps track of which tutorial step we are on
+    const [tutorialModalVisible, setTutorialModalVisible] = useState(true); // Tutorial modal visibility
+
+    // FlatList render item for gallery images
+    const renderItem = ({ item, index }) => (
+        <TouchableOpacity
+            key={index}
+            onPress={() => handleImageClick(index)}
+            style={[styles.imageWrapper,
+                isMobile ? styles.imageMobile : styles.imageDesktop,
+                isHovered ? styles.imageHovered : null]}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+
+        >
+            <Image
+                source={item}
+                style={[styles.image, isHovered ? styles.imageTilt : null]}
+                resizeMode="cover"
+            />
+        </TouchableOpacity>
+    );
+
     return (
         <View style={styles.container}>
             <Navbar />
-            <ScrollView
-                ref={scrollViewRef}
+            <FlatList
+                data={imageArray.slice(0, loadedImages)}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => index.toString()}
                 contentContainerStyle={styles.content}
+
                 onScroll={handleScroll}
-                scrollEventThrottle={16}
-            >
-                <Text style={styles.title}>Our Gallery</Text>
-                <Text style={styles.introductionText}>
-                    Këtu janë disa nga momentet tona të preferuara të kapura përmes kamerës sonë.
-                    {'\n'}Klikoni çdo foto për ta parë atë në detaje.
-                </Text>
-                <View style={styles.linetest}></View>
+                ListHeaderComponent={
+                    <>
+                        <Text style={styles.title}>Our Gallery</Text>
+                        <Text style={styles.introductionText}>
+                            Këtu janë disa nga momentet tona të preferuara të kapura përmes kamerës sonë.
+                            {'\n'}Klikoni çdo foto për ta parë atë në detaje.
+                        </Text>
+                        <View style={styles.linetest}></View>
+                    </>
+                }
+                onEndReached={handleEndReached}
+                onEndReachedThreshold={0.1} // Trigger lazy load when near the end
+                numColumns={isMobile ? 1 : 3}
 
-                <View style={styles.galleryGrid}>
-                    {imageArray.slice(0, loadedImages).map((image, index) => (
-                        <TouchableOpacity
-                            key={index}
-                            onPress={() => handleImageClick(index)}
-                            style={[styles.imageWrapper, isMobile ? styles.imageMobile : styles.imageDesktop, isHovered ? styles.imageHovered : null]}
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
-                        >
+            />
+
+            {isModalVisible && currentImageIndex !== null && (
+                <Modal transparent={true} visible={isModalVisible} onRequestClose={handleCloseModal}>
+                    <View style={styles.modalContainer}>
+                        <View style={styles.zoomedImageWrapper} {...swipeHandlers}>
+                            <TouchableOpacity style={styles.closeButton} onPress={handleCloseModal}>
+                                <Text style={styles.closeText}>X</Text>
+                            </TouchableOpacity>
                             <Image
-                                source={image}
-                                style={[styles.image, isHovered ? styles.imageTilt : null]}
-                                resizeMode="cover"
+                                source={imageArray[currentImageIndex]}
+                                style={isMobile ? styles.zoomedImageMobile : styles.zoomedImage}
+                                resizeMode="contain"
                             />
-                        </TouchableOpacity>
-                    ))}
-                </View>
-
-                {isModalVisible && currentImageIndex !== null && (
-                    <Modal transparent={true} visible={isModalVisible} onRequestClose={handleCloseModal}>
-                        <View style={styles.modalContainer}>
-                            <View style={styles.zoomedImageWrapper} {...swipeHandlers}>
-                                <TouchableOpacity style={styles.closeButton} onPress={handleCloseModal}>
-                                    <Text style={styles.closeText}>X</Text>
+                            <View style={styles.navigationButtons}>
+                                <TouchableOpacity onPress={handlePrevImage} style={styles.navButton}>
+                                    <Text style={styles.navButtonText}>{"<"}</Text>
                                 </TouchableOpacity>
-                                <Image
-                                    source={imageArray[currentImageIndex]}
-                                    style={isMobile ? styles.zoomedImageMobile : styles.zoomedImage}
-                                    resizeMode="contain"
-                                />
-                                <View style={styles.navigationButtons}>
-                                    <TouchableOpacity onPress={handlePrevImage} style={styles.navButton}>
-                                        <Text style={styles.navButtonText}>{"<"}</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={handleNextImage} style={styles.navButton}>
-                                        <Text style={styles.navButtonText}>{">"}</Text>
-                                    </TouchableOpacity>
-                                </View>
+                                <TouchableOpacity onPress={handleNextImage} style={styles.navButton}>
+                                    <Text style={styles.navButtonText}>{">"}</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
-                    </Modal>
-                )}
+                    </View>
+                </Modal>
+            )}
 
-                <Footer />
-            </ScrollView>
+            {/* Tutorial Modal */}
+            {tutorialModalVisible && (
+                <Modal transparent={true} visible={tutorialModalVisible} onRequestClose={() => setTutorialModalVisible(false)}>
+                    <View style={styles.modalContainer}>
+                        <View style={styles.tutorialModal}>
+                            <Text style={styles.tutorialText}>
+                                Klikoni mbi një foto, Swipe majtas ose djathtas për të lëvizur nëpër fotografi.
+                            </Text>
 
-            <TouchableOpacity style={styles.goToTopButton} onPress={() => scrollViewRef.current?.scrollTo({ y: 0, animated: true })}>
-                <Text style={styles.goToTopText}>↑</Text>
-            </TouchableOpacity>
+                            <TouchableOpacity style={styles.nextButton} onPress={() => setTutorialModalVisible(false)}>
+                                <Text style={styles.nextButtonText}>Okay</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                    </View>
+                </Modal>
+            )}
+
+            <Footer />
         </View>
     );
 };
@@ -161,6 +200,9 @@ const styles = StyleSheet.create({
         marginTop: 40,
         marginBottom: 80,
         fontWeight: 'bold',
+        textAlign: 'center',
+        alignSelf: 'center',  // Ensures the Text is centered in parent
+        width: '100%',        // Optional: makes sure it spans full width
     },
     galleryGrid: {
         flexDirection: 'row',
@@ -187,30 +229,26 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         overflow: 'hidden',
         margin: 40,
+        borderColor: 'white',
+        transition: 'border 0.3s ease', // Smooth transition for the border
         border: '5px solid white',
+
     },
     imageDesktop: {
         width: 600,
         height: 450,
     },
     imageMobile: {
-        width: '95%',
+        width: '100%',
         height: 500,
-        userSelect: 'none',
+        aspectRatio: 1,
     },
     image: {
         width: '100%',
         height: '100%',
-        userSelect: 'none',
-        transition: 'transform 0.5s ease',
     },
     imageHovered: {
-        transform: 'scale(1.05)',
-        border: '5px transparent #fff',
-    },
-    imageTilt: {
-        transform: 'rotateX(20deg) rotateY(20deg)',
-        border: '5px solid #fff',
+        transform: [{ scale: 1.05 }],
     },
     modalContainer: {
         flex: 1,
@@ -226,7 +264,6 @@ const styles = StyleSheet.create({
     zoomedImageMobile: {
         width: '100%',
         height: '100%',
-        borderRadius: 0,
     },
     zoomedImageWrapper: {
         position: 'relative',
@@ -242,8 +279,7 @@ const styles = StyleSheet.create({
         padding: 30,
         backgroundColor: 'transparent',
         borderRadius: 5,
-        zIndex: 999, // Ensure it is in front of other elements
-
+        zIndex: 999,
     },
     closeText: {
         fontSize: 50,
@@ -270,18 +306,35 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         WebkitTextStroke: '3px white',
     },
-    goToTopButton: {
-        position: 'absolute',
-        bottom: '12%',
-        right: '10%',
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        borderRadius: 50,
-        padding: 15,
+
+    // Tutorial Modal
+    tutorialModal: {
+        padding: 100,
+        backgroundColor: 'white',
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width:'80%', maxWidth:500,
     },
-    goToTopText: {
-        fontSize: 50,
+    tutorialText: {
+        fontSize: 36,
+        color: 'black',
+        marginBottom: 25,
+        textAlign: 'center',
+        lineHeight: 50,
+    },
+    nextButton: {
+        backgroundColor: 'black',
+        paddingVertical: 30,
+        paddingHorizontal: 40,
+        borderRadius: 20,
+        outline:'none',
+        borderWidth:0,
+    },
+    nextButtonText: {
         color: 'white',
-        fontWeight: 'bold',
+        fontWeight: 'bold' ,
+        fontSize: 18,
     },
 });
 
