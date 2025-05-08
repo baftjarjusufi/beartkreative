@@ -40,7 +40,7 @@ const BackgroundPhoto = () => {
                 <View style={styles.textContainer}>
                     <Text style={styles.mainText}>BEART</Text>
                     <View style={styles.line} />
-                    <Text style={styles.subText}>Photography</Text>
+                    <Text style={styles.subText}>Production</Text>
                     <Text style={styles.description}>Capturing life's most precious moments with artistry and passion... </Text>
 
 
