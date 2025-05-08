@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, View, Text, Dimensions, TouchableOpacity, Animated } from 'react-native';
+import { StyleSheet, View, Text, Dimensions, TouchableOpacity, Animated, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const Navbar = ({ menuOpen, setMenuOpen }) => {
@@ -55,9 +55,11 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
             className="navbar"
         >
             <TouchableOpacity onPress={() => handleLink('Home')}>
-                <Text style={[styles.logo, isMobile && styles.logoMobile]}>Beart</Text>
+                <Image
+                    source={require('../assets/images/logo2.png')}  // Replace with the path to your logo image
+                    style={[styles.logo, isMobile && styles.logoMobile]}  // Apply styles for the logo
+                />
             </TouchableOpacity>
-
             {isMobile ? (
                 <>
                     <TouchableOpacity onPress={() => setMenuOpen(!menuOpen)} className="hamburger">
@@ -122,13 +124,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     logo: {
-        color: '#fff',
-        fontSize: 20,
-        fontWeight: 'bold',
+        width: 160,  // Set a specific width for the logo
+        height: 80,  // Set a specific height for the logo
         marginLeft: 40,
     },
     logoMobile: {
-        fontSize: 44,
+        width: 200,  // Set a larger width for the mobile logo
+        height: 80,  // Set a larger height for the mobile logo
         marginLeft: 60,
     },
     navLinks: {

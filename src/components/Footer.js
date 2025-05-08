@@ -4,6 +4,9 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, Linking, Dimensions } 
 const Footer = () => {
     const { width } = Dimensions.get('window'); // Get the current screen width
 
+    // Detect if on iOS (for React Native Web)
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
     const handleSocialMediaPress = (url) => {
         Linking.openURL(url);
     };
@@ -16,37 +19,34 @@ const Footer = () => {
             <View style={[styles.footer, isMobile ? styles.footerMobile : null]}>
                 <View style={styles.content}>
                     <Text style={[styles.companyName, isMobile ? styles.companyNameMobile : null]}>Beart Production</Text>
-                    <Text style={[styles.motto, isMobile ? styles.mottoMobile : null]}>Capturing life's most precious moments with artistry and passion...</Text>
                 </View>
 
-                {/* "Na ndjekni edhe ne:" Text before the icons */}
-                <View style={styles.socialMediaContainer}>
-                    <Text style={[styles.socialMediaText, isMobile ? styles.socialMediaTextMobile : null]}>Na ndjekni edhe në:</Text>
+                {/* Social Media and Contact in Same Line */}
+                <View style={styles.socialMediaContactContainer}>
+                    {/* Social Media */}
+                    <View style={styles.socialMediaContainer}>
+                        <Text style={[styles.socialMediaText, isMobile ? styles.socialMediaTextMobile : null]}>Na ndjekni edhe në:</Text>
+                        <View style={styles.socialMedia}>
+                            <TouchableOpacity onPress={() => handleSocialMediaPress('https://www.instagram.com/beartproduction10/?hl=en')}>
+                                <Image source={require('../assets/images/Instagram-icon.png')} style={[styles.icon, isMobile ? styles.iconMobile : null]} />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => handleSocialMediaPress('https://www.facebook.com/creativevideostudio10/')}>
+                                <Image source={require('../assets/images/facebook-icon.png')} style={[styles.icon, isMobile ? styles.iconMobile : null]} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
 
-                    <View style={styles.socialMedia}>
-                        <TouchableOpacity onPress={() => handleSocialMediaPress('https://www.instagram.com/beartproduction10/?hl=en')}>
-                            <Image source={require('../assets/images/Instagram-icon.png')} style={[styles.icon, isMobile ? styles.iconMobile : null]} />
+                    {/* Contact */}
+                    <View style={styles.contactContainer}>
+                        <Text style={[styles.contactText, isMobile ? styles.contactTextMobile : null]}>Na kontaktoni në:</Text>
+                        <TouchableOpacity onPress={() => handleSocialMediaPress('https://wa.me/+38970751551')}>
+                            <Image source={require('../assets/images/whatsapp-icon.png')} style={[styles.whatsappIcon, isMobile ? styles.whatsappIconMobile : null]} />
                         </TouchableOpacity>
-
-                        <TouchableOpacity onPress={() => handleSocialMediaPress('https://www.facebook.com/creativevideostudio10/')}>
-                            <Image source={require('../assets/images/facebook-icon.png')} style={[styles.icon, isMobile ? styles.iconMobile : null]} />
+                        <TouchableOpacity onPress={() => handleSocialMediaPress('viber://chat?number=%2B38970751551')}>
+                            <Image source={require('../assets/images/viber-icon.png')} style={[styles.whatsappIcon, isMobile ? styles.whatsappIconMobile : null]} />
                         </TouchableOpacity>
                     </View>
                 </View>
-
-                {/* Text and WhatsApp + Viber Icon */}
-                <View style={styles.contactContainer}>
-                    <Text style={[styles.contactText, isMobile ? styles.contactTextMobile : null]}>Na kontaktoni në: </Text>
-
-                    <TouchableOpacity onPress={() => handleSocialMediaPress('https://wa.me/+38970751551')}>
-                        <Image source={require('../assets/images/whatsapp-icon.png')} style={[styles.whatsappIcon, isMobile ? styles.whatsappIconMobile : null]} />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => handleSocialMediaPress('viber://chat?number=%2B38970751551')}>
-                        <Image source={require('../assets/images/viber-icon.png')} style={[styles.whatsappIcon, isMobile ? styles.whatsappIconMobile : null]} />
-                    </TouchableOpacity>
-                </View>
-
 
                 {/* Line above Copyright, Inline with Quick Links */}
                 <View style={styles.lineContainer}>
@@ -54,10 +54,8 @@ const Footer = () => {
                 </View>
 
                 {/* Copyright Text */}
-                <Text style={styles.copyrightText}>Copyright 2025 Beart Production</Text>
+                <Text style={[styles.copyrightText , isMobile ? styles.copyrightTextMobile : null]}>Copyright 2025 Beart Production</Text>
             </View>
-
-
 
             <View style={styles.footerSpacing}></View>
         </View>
@@ -66,130 +64,129 @@ const Footer = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flexGrow: 1,
+        flex: 1,
+        justifyContent: 'space-between',
     },
+
     footer: {
+
         width: '100%',
         backgroundColor: '#000',
-        paddingVertical: 20,
-        paddingHorizontal: 15,
-        marginTop: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        marginTop: 10,
         borderTopWidth: 2,
         borderTopColor: '#fff',
         opacity: 0.6,
-        marginBottom: 30,
+        marginBottom: 20,
+    },
+    footerIOS: {
+        paddingBottom: 100,
+        height: 80,
     },
     footerMobile: {
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        marginBottom: 5,
+        paddingVertical: 5,
+        paddingHorizontal: 5,
+        marginBottom: 20,
     },
-    content: {
-        alignItems: 'center',
-        marginBottom: 30,
-    },
+
     companyName: {
         color: '#fff',
-        fontSize: 40,
+        fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
+        marginBottom: 10,
+
     },
     companyNameMobile: {
-        fontSize: 26,  // Smaller on mobile
-    },
-    motto: {
-        color: '#fff',
         fontSize: 32,
-        textAlign: 'center',
-        marginTop: 15,
     },
-    mottoMobile: {
-        fontSize: 20,  // Smaller on mobile
-    },
-    socialMediaTextContainer: {
+
+    socialMediaContactContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginBottom: 20,
+        alignItems: 'center',
+        marginBottom: 10,
     },
     socialMediaContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 20,
-    },
-    socialMediaText: {
-        color: '#fff',
-        fontSize: 28,
-        fontWeight: 'bold',
-        marginRight: 10,
-    },
-    socialMediaTextMobile: {
-        fontSize: 18,  // Smaller on mobile
-    },
-    socialMedia: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 5,
-    },
-    icon: {
-        width: 85,
-        height: 85,
-        marginHorizontal: 10,
-    },
-    iconMobile: {
-        width: 50,  // Smaller on mobile
-        height: 50, // Smaller on mobile
+        marginRight: 20,  // Added some space between social media and contact
     },
     contactContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 20,
+    },
+    socialMediaText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginRight: 10,
+    },
+    socialMediaTextMobile: {
+        fontSize: 18,
+    },
+    socialMedia: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    icon: {
+        width: 40,
+        height:  40,
+        marginHorizontal: 12,
+    },
+    iconMobile: {
+        width: 55,
+        height: 55,
     },
     contactText: {
         color: '#fff',
-        fontSize: 28,
+        fontSize: 16,
         fontWeight: 'bold',
         marginRight: 10,
     },
     contactTextMobile: {
-        fontSize: 18,  // Smaller on mobile
+        fontSize: 18,
     },
     whatsappIcon: {
-        width: 85,
-        height: 85,
-        marginHorizontal: 10,
+        width:  40,
+        height:  40,
+        marginHorizontal: 12,
     },
     whatsappIconMobile: {
-        width: 50,  // Smaller on mobile
-        height: 50, // Smaller on mobile
+        width: 55,
+        height: 55,
     },
-
-
     lineContainer: {
         alignItems: 'center',
-        marginTop: 0,
-        marginBottom: 10,
+        marginTop: 5,
+        marginBottom: 5,
     },
     line: {
         width: '60%',
         height: 1,
         backgroundColor: '#fff',
         opacity: 0.5,
-        marginBottom: 20,
-        marginTop: 20,
+        marginBottom: 15,
     },
     copyrightText: {
         color: '#fff',
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: 'normal',
         textAlign: 'center',
+
     },
-    footerSpacing: {
-        height: 100,
-        backgroundColor: '#000',
-        marginBottom: 30,
+    copyrightTextMobile:{
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'normal',
+        textAlign: 'center',
+        marginBottom: 5,
     },
+
+
 });
 
 export default Footer;

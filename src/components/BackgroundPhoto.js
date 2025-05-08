@@ -10,6 +10,7 @@ import igIcon from '../assets/images/Instagram-icon.png';  // Instagram icon
 
 
 
+
 const BackgroundPhoto = () => {
     const [hovered, setHovered] = useState(false); // State to handle hover effect
 
@@ -29,7 +30,7 @@ const BackgroundPhoto = () => {
     };
     return (
         <ImageBackground
-            source={require('../assets/images/test-background.png')}
+            source={require('../assets/images/bg-photo.jpeg')}
             style={styles.bgPhoto}
             resizeMode="cover"
             onContextMenu={disableSave} // disables right-click on image
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     },
     bgPhoto: {
         width: '100%',
-        height: width > 768 ? height * 0.9 : height * 1.6,
+        height: width > 768 ? height * 1.1 : height * 1.6,
         justifyContent: 'center',
         alignItems: 'center',
     },
