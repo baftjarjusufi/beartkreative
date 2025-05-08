@@ -56,7 +56,7 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
         >
             <TouchableOpacity onPress={() => handleLink('Home')}>
                 <Image
-                    source={require('../assets/images/logo2.png')}  // Replace with the path to your logo image
+                    source={require('../assets/images/Logo2.png')}  // Replace with the path to your logo image
                     style={[styles.logo, isMobile && styles.logoMobile]}  // Apply styles for the logo
                 />
             </TouchableOpacity>
