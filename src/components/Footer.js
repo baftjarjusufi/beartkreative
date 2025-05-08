@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderTopWidth: 2,
         borderTopColor: '#fff',
-        opacity: 0.6,
         marginBottom: 20,
     },
     footerIOS: {

@@ -7,7 +7,7 @@ import {
     Modal,
     TouchableOpacity,
     useWindowDimensions,
-    FlatList,
+    FlatList, Linking,
 } from 'react-native';
 import Navbar from './Navbar';
 import galleryImages from "./galleryImages";
@@ -74,6 +74,9 @@ const Gallery = () => {
         }, 200),  // 200ms debounce delay
         [] // Empty dependency array so this callback does not change on re-renders
     );
+    const handleSocialMediaPress = (url) => {
+        Linking.openURL(url);
+    };
 
     const isMobile = width <= 600;
 
@@ -114,6 +117,8 @@ const Gallery = () => {
         <View style={styles.container}>
             <Navbar />
             <FlatList
+                scrollEnabled={true}
+
                 data={imageArray.slice(0, loadedImages)}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => index.toString()}
@@ -128,6 +133,22 @@ const Gallery = () => {
                             {'\n'}Klikoni çdo foto për ta parë atë në detaje.
                         </Text>
                         <View style={styles.linetest}></View>
+
+                        {/* Social Media and Contact in Same Line */}
+                        <View style={styles.socialMediaContactContainer}>
+                            {/* Social Media */}
+                            <View style={styles.socialMediaContainer}>
+                                <Text style={[styles.socialMediaText, isMobile ? styles.socialMediaTextMobile : null]}>Për më shumë Foto na ndjekni edhe në:</Text>
+                                <View style={styles.socialMedia}>
+                                    <TouchableOpacity onPress={() => handleSocialMediaPress('https://www.instagram.com/beartproduction10/?hl=en')}>
+                                        <Image source={require('../assets/images/Instagram-icon.png')} style={[styles.icon, isMobile ? styles.iconMobile : null]} />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => handleSocialMediaPress('https://www.facebook.com/creativevideostudio10/')}>
+                                        <Image source={require('../assets/images/facebook-icon.png')} style={[styles.icon, isMobile ? styles.iconMobile : null]} />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
                     </>
                 }
                 onEndReached={handleEndReached}
@@ -193,6 +214,8 @@ const styles = StyleSheet.create({
         marginTop: 80,
         padding: 20,
         alignItems: 'center',
+        minHeight: '100vh', // Ensures it fills full height of screen
+
     },
     title: {
         fontSize: 60,
@@ -336,6 +359,42 @@ const styles = StyleSheet.create({
         fontWeight: 'bold' ,
         fontSize: 18,
     },
+    socialMediaContactContainer: {
+        marginTop: 20,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 30,
+    },
+    socialMediaContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    socialMediaText: {
+        color: 'white',
+        fontSize: 32,
+        marginRight: 10,
+    },
+    socialMediaTextMobile: {
+        fontSize: 26,
+    },
+    socialMedia: {
+        flexDirection: 'row',
+    },
+    icon: {
+        width: 60,
+        height: 60,
+        marginLeft: 10,
+        marginRight: 15, // Adjust space between icons as needed
+
+    },
+    iconMobile: {
+        width: 55,
+        height: 55,
+        marginRight: 15, // Adjust space between icons as needed
+
+    },
+
 });
 
 export default Gallery;

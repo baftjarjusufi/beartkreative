@@ -32,6 +32,9 @@ const galleryImages = [
     "https://res.cloudinary.com/dffjrf9v7/image/upload/f_webp/v1746694781/IMG_8575_q1pcgj.jpg",
     "https://res.cloudinary.com/dffjrf9v7/image/upload/f_webp/v1746694779/IMG_8874_rhshht.jpg",
 
+
+
+
 ];
 
 export default galleryImages;

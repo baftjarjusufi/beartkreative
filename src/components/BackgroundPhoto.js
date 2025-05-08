@@ -30,7 +30,7 @@ const BackgroundPhoto = () => {
     };
     return (
         <ImageBackground
-            source={require('../assets/images/bg-photo.jpeg')}
+            source={require('../assets/images/bg-photos.jpeg')}
             style={styles.bgPhoto}
             resizeMode="cover"
             onContextMenu={disableSave} // disables right-click on image

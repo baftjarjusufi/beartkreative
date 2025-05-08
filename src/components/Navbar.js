@@ -124,13 +124,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     logo: {
-        width: 160,  // Set a specific width for the logo
-        height: 80,  // Set a specific height for the logo
+        width: 160,
+        height: 80,
         marginLeft: 40,
     },
     logoMobile: {
-        width: 200,  // Set a larger width for the mobile logo
-        height: 80,  // Set a larger height for the mobile logo
+        width: 200,
+        height: 100,
         marginLeft: 60,
     },
     navLinks: {
