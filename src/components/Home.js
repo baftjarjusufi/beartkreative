@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import BackgroundPhoto from './BackgroundPhoto'
 import {useSwipeable} from "react-swipeable";
 
+
 const { width } = Dimensions.get("window");
 
 const Home = () => {
@@ -485,6 +486,9 @@ const Home = () => {
             <View style={styles.bgContainer}>
                 <BackgroundPhoto />
             </View>
+
+
+
 
             <View style={styles.cardContainer}>
 

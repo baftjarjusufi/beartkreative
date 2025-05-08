@@ -25,7 +25,41 @@ const Gallery = () => {
     const [loadedImages, setLoadedImages] = useState(5); // Initially load 5 images
     const imagesPerLoad = 2; // Number of images to load at once
 
+
+
     const imageArray = galleryImages;
+
+    const imageRefs = useRef([]);
+
+    // Lazy load when images enter viewport
+    const handleImageIntersection = (entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const index = parseInt(entry.target.getAttribute("data-index"), 10);
+                if (index >= loadedImages - 1) {
+                    setLoadedImages((prev) => prev + imagesPerLoad);
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        const observer = new IntersectionObserver(handleImageIntersection, {
+            rootMargin: '1000px', // Start observing 1000px before the image enters the viewport
+            threshold: 0.5, // Trigger when 50% of the image is in view
+        });
+
+        // Attach observer to each image
+        imageRefs.current.forEach((image) => {
+            if (image) {
+                observer.observe(image);
+            }
+        });
+
+        // Clean up observer on component unmount
+        return () => {
+            observer.disconnect();
+        };
+    }, []);
 
     const handleImageClick = (index) => {
         setCurrentImageIndex(index);
@@ -87,29 +121,23 @@ const Gallery = () => {
         trackMouse: true,
     });
 
+
+
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
 
     const [currentStep, setCurrentStep] = useState(0); // Keeps track of which tutorial step we are on
     const [tutorialModalVisible, setTutorialModalVisible] = useState(true); // Tutorial modal visibility
 
-    // FlatList render item for gallery images
+    // Simplified renderItem
     const renderItem = ({ item, index }) => (
         <TouchableOpacity
-            key={index}
+            ref={(el) => (imageRefs.current[index] = el)}
+            data-index={index}
             onPress={() => handleImageClick(index)}
-            style={[styles.imageWrapper,
-                isMobile ? styles.imageMobile : styles.imageDesktop,
-                isHovered ? styles.imageHovered : null]}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-
+            style={[styles.imageWrapper, isMobile ? styles.imageMobile : styles.imageDesktop]}
         >
-            <Image
-                source={item}
-                style={[styles.image, isHovered ? styles.imageTilt : null]}
-                resizeMode="cover"
-            />
+            <Image source={item} style={styles.image} resizeMode="cover" />
         </TouchableOpacity>
     );
 
