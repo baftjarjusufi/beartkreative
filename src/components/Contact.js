@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {View, Text, TextInput, Button, StyleSheet, ScrollView, Alert, TouchableOpacity} from 'react-native';
+import {View, Text,Linking, Image, TextInput, Button, StyleSheet, ScrollView, Alert, TouchableOpacity} from 'react-native';
 import Navbar from './Navbar';
 import Footer from './Footer'; // Adjust the path if needed
 import BusCard from './BusCard';
@@ -16,6 +16,10 @@ const Contact = () => {
     const [isMobile, setIsMobile] = useState(Dimensions.get('window').width < 768);
 
     const [errors, setErrors] = useState({});
+
+    const handleCall = () => {
+        Linking.openURL('tel:+38970751551');
+    };
 
 
     useEffect(() => {
@@ -169,6 +173,8 @@ const Contact = () => {
                 )}
 
                 <View style={[styles.form, isMobile ? styles.mobileForm : styles.pcForm]}>
+
+                    {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
                     <TextInput
                         ref={inputRefs.name}
 
@@ -180,8 +186,8 @@ const Contact = () => {
                         accessibilityLabel="First name input"
 
                     />
-                    {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
 
+                    {errors.surname && <Text style={styles.errorText}>{errors.surname}</Text>}
                     <TextInput
                         ref={inputRefs.surname}
 
@@ -193,8 +199,8 @@ const Contact = () => {
                         accessibilityLabel="Last name input"
 
                     />
-                    {errors.surname && <Text style={styles.errorText}>{errors.surname}</Text>}
 
+                    {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
                     <TextInput
                         ref={inputRefs.email}
 
@@ -206,8 +212,8 @@ const Contact = () => {
                         keyboardType="email-address"
                         accessibilityLabel="Email input"
                     />
-                    {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
 
+                    {errors.subject && <Text style={styles.errorText}>{errors.subject}</Text>}
                     <TextInput
                         ref={inputRefs.subject}
 
@@ -218,8 +224,8 @@ const Contact = () => {
                         onChangeText={(text) => handleChange(text, 'subject')}
                         accessibilityLabel="Subject input"
                     />
-                    {errors.subject && <Text style={styles.errorText}>{errors.subject}</Text>}
 
+                    {errors.message && <Text style={styles.errorText}>{errors.message}</Text>}
                     <TextInput
                         ref={inputRefs.message}
 
@@ -231,7 +237,6 @@ const Contact = () => {
                         multiline
                         accessibilityLabel="Message input"
                     />
-                    {errors.message && <Text style={styles.errorText}>{errors.message}</Text>}
 
                     <TouchableOpacity
                         onPress={handleSubmit}
@@ -244,9 +249,27 @@ const Contact = () => {
                         <Text style={styles.buttonText}>
                             {isSubmitting ? 'Sending...' : 'Dërgo mesazh'}
                         </Text>
+
+
+
                     </TouchableOpacity>
+
+                    {/* Contact directly */}
+                    <View style={styles.contactContainer}>
+                        <Text style={styles.contactText}>Na kontakto direkt: </Text>
+                        <TouchableOpacity onPress={handleCall} style={styles.phoneContainer}>
+                            <Image
+                                source={require('../assets/images/phone-icon.png')} // Update this path
+                                style={styles.phoneIcon}
+                            />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
+                </View>
+
+
+
+
 
             <Footer />
         </ScrollView>
@@ -265,7 +288,7 @@ const styles = StyleSheet.create({
     },
     successMessage: {
         color: 'green',
-        fontSize: 18,
+        fontSize: 32,
         fontWeight: 'bold',
         marginBottom: 20,
         textAlign: 'center',
@@ -351,6 +374,30 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         fontWeight: 'bold',
+    },
+    // New styles for the contact section
+    contactContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    contactText: {
+        color: '#fff',
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
+    phoneContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 10,
+    },
+
+
+    phoneIcon: {
+        width: 60,
+        height: 60,
+        marginLeft: 10, // Adds some space between the number and the icon
     },
 
 

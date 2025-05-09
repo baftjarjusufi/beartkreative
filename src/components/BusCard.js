@@ -43,7 +43,7 @@ const BusCard = () => {
                     // This will continuously flip between 0 and 180
                     return prevAngle === 0 ? 180 : 0;
                 });
-            }, 1000); // Faster flip (1 second for each full flip)
+            }, 2000); // Faster flip (1 second for each full flip)
             setRotationInterval(interval);
         }
 

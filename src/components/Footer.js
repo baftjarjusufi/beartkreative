@@ -18,8 +18,17 @@ const Footer = () => {
         <View style={styles.container}>
             <View style={[styles.footer, isMobile ? styles.footerMobile : null]}>
                 <View style={styles.content}>
-                    <Text style={[styles.companyName, isMobile ? styles.companyNameMobile : null]}>Beart Production</Text>
+
+
+                    <View style={styles.headerContainer}>
+                        <Text style={[styles.companyName, isMobile ? styles.companyNameMobile : null]}>
+                            Beart Production
+                        </Text>
+                        <Text style={styles.addressText}>1200 Tetova, Maqedonia e Veriut</Text>
+                    </View>
+
                 </View>
+
 
                 {/* Social Media and Contact in Same Line */}
                 <View style={styles.socialMediaContactContainer}>
@@ -94,12 +103,15 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
+        justifyContent:'center',
         marginBottom: 10,
+
 
     },
     companyNameMobile: {
         fontSize: 32,
     },
+
 
     socialMediaContactContainer: {
         flexDirection: 'row',
@@ -177,14 +189,21 @@ const styles = StyleSheet.create({
         textAlign: 'center',
 
     },
-    copyrightTextMobile:{
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'normal',
-        textAlign: 'center',
-        marginBottom: 5,
-    },
+    headerContainer: {
+        flexDirection: 'row',  // Align the company name and address in a row
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%', // Ensure it takes full width to position correctly
 
+        marginBottom: 10,  // Add space below the header
+    },
+    addressText: {
+        fontSize: 18,
+        color: '#fff',
+        fontWeight: '300',
+        marginLeft: 20, // Adds space between the company name and address
+
+    },
 
 });
 
