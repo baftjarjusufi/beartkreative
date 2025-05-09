@@ -24,7 +24,7 @@ const Footer = () => {
                         <Text style={[styles.companyName, isMobile ? styles.companyNameMobile : null]}>
                             Beart Production
                         </Text>
-                        <Text style={styles.addressText}>1200 Tetova, Maqedonia e Veriut</Text>
+                        <Text style={styles.addressText}>1200 Tetovë, Maqedonia e Veriut</Text>
                     </View>
 
                 </View>
