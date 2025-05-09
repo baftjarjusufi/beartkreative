@@ -7,6 +7,8 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
     const scrollY = useRef(new Animated.Value(0)).current;
     const [isScrolled, setIsScrolled] = useState(false);
 
+
+
     useEffect(() => {
         const listener = scrollY.addListener(({ value }) => {
             setIsScrolled(value > 50);

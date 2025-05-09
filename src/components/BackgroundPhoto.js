@@ -21,13 +21,7 @@ const BackgroundPhoto = () => {
         Linking.openURL('whatsapp://send?phone=+38970751551');
     };
 
-    const handleInstagram = () => {
-        Linking.openURL('https://www.instagram.com/beartproduction10/?hl=en');  // Replace with your Instagram link
-    };
 
-    const handleFacebook = () => {
-        Linking.openURL('https://www.facebook.com/creativevideostudio10/');  // Replace with your Facebook link
-    };
     return (
         <ImageBackground
             source={require('../assets/images/bg-photos.jpeg')}
@@ -61,19 +55,6 @@ const BackgroundPhoto = () => {
 
             </View>
 
-            {/* Social Media Icons */}
-            <TouchableOpacity
-                onPress={handleInstagram}
-                style={styles.socialIconContainer}
-            >
-                <Image source={igIcon} style={styles.socialIcon} />
-            </TouchableOpacity>
-            <TouchableOpacity
-                onPress={handleFacebook}
-                style={[styles.socialIconContainer, styles.facebookIcon]}
-            >
-                <Image source={fbIcon} style={styles.socialIcon} />
-            </TouchableOpacity>
         </ImageBackground>
     )
 }
@@ -174,28 +155,7 @@ const styles = StyleSheet.create({
         shadowRadius: 15, // Shadow blur radius
         elevation: 15, // For Android devices
     },
-    // Social Media Icons Container for the left side
-    socialIconContainer: {
-        position: 'absolute',
-        left: 20,  // Position them to the left of the screen
-        top: '50%',  // Center them vertically
-        alignItems: 'center',  // Center the icons horizontally
-        marginHorizontal: 20,
-        marginRight:20,
-    },
-    socialIcon: {
-        width: 70, // Icon size
-        height: 70, // Icon size
-        marginTop: -7, // Space for Facebook icon
 
-    },
-    facebookIcon:{
-        width: 70, // Icon size
-        height: 70, // Icon size
-        marginTop: 100, // Space for Facebook icon
-
-
-    },
 });
 
 export default BackgroundPhoto

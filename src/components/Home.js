@@ -1,5 +1,5 @@
 import React, {useRef, useState, useEffect} from 'react';
-import {Dimensions, ScrollView, StatusBar, StyleSheet} from 'react-native';
+import {Animated, Dimensions, Linking, Pressable, ScrollView, StatusBar, StyleSheet} from 'react-native';
 import { Text } from 'react-native';
 import {View, SafeAreaView, Image} from 'react-native';
 
@@ -16,6 +16,12 @@ const Home = () => {
     const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
     const testimonialScrollViewRef = useRef(null);
+
+    const [showLabel, setShowLabel] = useState(false);
+
+    const openLink = (url ) =>{
+      Linking.openURL(url);
+    };
 
     useEffect(() => {
         const handleResize = () => {
@@ -78,6 +84,62 @@ const Home = () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [currentTestimonialIndex]);
+
+    const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
+    const iconSize = screenWidth > 600 ? 60 : 80; // Larger icons for PC, smaller for mobile
+
+    const [clicked, setClicked] = useState(false); // To track the click
+
+    // Update the screen width on orientation change
+    useEffect(() => {
+        const onChange = (e) => setScreenWidth(e.window.width);
+
+        Dimensions.addEventListener('change', onChange);
+        return () => Dimensions.removeEventListener('change', onChange);
+    }, []);
+
+    // Function to handle clicks
+    const handlePress = () => {
+        if (!clicked) {
+            setClicked(true);    // Set clicked to true so the next click will go to the link
+        }
+    };
+
+    const [scaleInstagram] = useState(new Animated.Value(1));
+    const [scaleFacebook] = useState(new Animated.Value(1));
+
+
+    // Handle press down to animate scale for Instagram
+    const handlePressInInstagram = () => {
+        Animated.spring(scaleInstagram, {
+            toValue: 1.5, // Slightly shrink the Instagram icon
+            useNativeDriver: true,
+        }).start();
+    };
+
+    // Handle press out to return Instagram to normal scale
+    const handlePressOutInstagram = () => {
+        Animated.spring(scaleInstagram, {
+            toValue: 1, // Return to normal size
+            useNativeDriver: true,
+        }).start();
+    };
+
+    // Handle press down to animate scale for Facebook
+    const handlePressInFacebook = () => {
+        Animated.spring(scaleFacebook, {
+            toValue: 1.5, // Slightly shrink the Facebook icon
+            useNativeDriver: true,
+        }).start();
+    };
+
+    // Handle press out to return Facebook to normal scale
+    const handlePressOutFacebook = () => {
+        Animated.spring(scaleFacebook, {
+            toValue: 1, // Return to normal size
+            useNativeDriver: true,
+        }).start();
+    };
 
     const cardData = {
         wedding: {
@@ -475,10 +537,63 @@ const Home = () => {
             flexDirection: 'column',
             gap: windowWidth > 770 ? 0 : 8,
         },
+        socialContainer: {
+            alignItems: 'center',
+            cursor: 'pointer',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            padding: 20,
+            borderRadius: 10,
+            position: 'relative',
+            overflow: 'hidden',
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 5 },
+            shadowOpacity: 0.3,
+            shadowRadius: 10,
+            elevation: 5,
+            boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.3)',
+            backdropFilter: 'blur(50px)',
+            webkitBackdropFilter: 'blur(50px)',
+        },
 
+        iconContainer: {
+            flexDirection: 'row',
+            gap: 15,
+            alignItems: 'center',
+        },
+        icon: {
+            padding: 10,
+            resizeMode: 'contain',
+        },
+        iconWrapper: {
+            marginHorizontal: 10,
+        },
+        textContainerNa: {
+            marginBottom: 15,
+            justifyContent: 'center',
+        },
+        text: {
+            fontSize: 28,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            color: '#ffffff',
+            marginRight: 30,
+            fontStyle: 'italic',
 
+        },
+
+        blurOverlay:{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(255,255,255,0.9)',
+            zIndex: -1,
+            filter: 'blur(100px)',
+
+        },
     });
-
     return (
         <ScrollView contentContainerStyle={styles.container}>
 
@@ -486,6 +601,49 @@ const Home = () => {
             <View style={styles.bgContainer}>
                 <BackgroundPhoto />
             </View>
+
+            <Pressable
+                onPress={handlePress}
+                style={styles.socialContainer}
+            >
+                <View style={styles.blurOverlay} />
+
+                <View style={styles.textContainerNa}>
+                    <Text style={styles.text}>Na ndjek edhe në:</Text>
+                </View>
+
+                <View style={styles.iconContainer}>
+                    <Animated.View
+                        style={[styles.iconWrapper, { transform: [{ scale: scaleInstagram  }] }]}
+                    >
+                        <Pressable
+                            onPressIn={handlePressInInstagram}
+                            onPressOut={handlePressOutInstagram}
+                            onPress={() => openLink('https://www.instagram.com/beartproduction10/?hl=en')}
+                        >
+                            <Image
+                                source={require('../assets/images/Instagram-Icones.png')}
+                                style={[styles.icon, { width: iconSize, height: iconSize }]}
+                            />
+                        </Pressable>
+                    </Animated.View>
+
+                    <Animated.View
+                        style={[styles.iconWrapper, { transform: [{ scale: scaleFacebook }] }]}
+                    >
+                        <Pressable
+                            onPressIn={handlePressInFacebook}
+                            onPressOut={handlePressOutFacebook}
+                            onPress={() => openLink('https://www.facebook.com/creativevideostudio10/')}
+                        >
+                            <Image
+                                source={require('../assets/images/Facebook-Icones.png')}
+                                style={[styles.icon, { width: iconSize, height: iconSize }]}
+                            />
+                        </Pressable>
+                    </Animated.View>
+                </View>
+            </Pressable>
 
 
 
