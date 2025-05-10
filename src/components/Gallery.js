@@ -166,7 +166,7 @@ const Gallery = () => {
                         <View style={styles.socialMediaContactContainer}>
                             {/* Social Media */}
                             <View style={styles.socialMediaContainer}>
-                                <Text style={[styles.socialMediaText, isMobile ? styles.socialMediaTextMobile : null]}>Për më shumë Foto na ndjekni edhe në:</Text>
+                                <Text style={[styles.socialMediaText, isMobile ? styles.socialMediaTextMobile : null]}>Për më shumë foto na ndjekni edhe në:</Text>
                                 <View style={styles.socialMedia}>
                                     <TouchableOpacity onPress={() => handleSocialMediaPress('https://www.instagram.com/beartproduction10/?hl=en')}>
                                         <Image source={require('../assets/images/Instagram-icon.png')} style={[styles.icon, isMobile ? styles.iconMobile : null]} />
@@ -214,6 +214,8 @@ const Gallery = () => {
             {tutorialModalVisible && (
                 <Modal transparent={true} visible={tutorialModalVisible} onRequestClose={() => setTutorialModalVisible(false)}>
                     <View style={styles.modalContainer}>
+                        <View style={styles.zoomedImageWrapper} {...swipeHandlers}>
+
                         <View style={styles.tutorialModal}>
                             <Text style={styles.tutorialText}>
                                 Klikoni mbi një foto, Swipe majtas ose djathtas për të lëvizur nëpër fotografi.
@@ -222,7 +224,7 @@ const Gallery = () => {
                             <TouchableOpacity style={styles.nextButton} onPress={() => setTutorialModalVisible(false)}>
                                 <Text style={styles.nextButtonText}>Okay</Text>
                             </TouchableOpacity>
-
+                        </View>
                         </View>
                     </View>
                 </Modal>
@@ -289,6 +291,8 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         transition: 'border 0.3s ease',
         border: '5px solid white',
+        alignSelf: 'center', // Add this line
+
 
     },
     imageDesktop: {
@@ -312,6 +316,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        userSelect: 'none', // Disable text selection for web
+        backdropFilter: 'blur(10px)',
+        webkitBackdropFilter: 'blur(10px)',
+
     },
     zoomedImage: {
         width: '90%',
@@ -372,7 +380,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width:'80%', maxWidth:500,
+
     },
+
     tutorialText: {
         fontSize: 36,
         color: 'black',
@@ -412,7 +422,7 @@ const styles = StyleSheet.create({
 
     },
     socialMediaTextMobile: {
-        fontSize: 26,
+        fontSize: 28,
         color: 'rgba(255, 255, 255, 0.8)',
         lineHeight: '1.5',
 
