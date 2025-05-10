@@ -1,19 +1,12 @@
 import React, {useState} from 'react';
 import { ScrollView, StyleSheet, Animated ,TouchableWithoutFeedback, View} from 'react-native';
-
-
-
-
-
 import Navbar from "./components/Navbar";// Import BlackBackground
 import Home from "./components/Home";
-
 
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {NavigationContainer} from "@react-navigation/native";
 import Contact from "./components/Contact";
 import Gallery from "./components/Gallery";
-
 
 const Stack = createNativeStackNavigator();
 
@@ -67,9 +60,10 @@ const App = () => {
                             id={'mainNavigation'}
                             screenOptions={{ headerShown: false }}
                         >
-                            <Stack.Screen name="Home" component={Home} />
-                            <Stack.Screen name="Gallery" component={Gallery} />
-                            <Stack.Screen name="Contact" component={Contact} />
+                            <Stack.Screen name="Home" component={Home}  options={{ title: 'Beart Production' }}
+                            />
+                            <Stack.Screen name="Gallery" component={Gallery} options={{ title: 'Beart Production Galeria' }} />
+                            <Stack.Screen name="Contact" component={Contact}  options={{ title: 'Beart Production Kontakti' }}/>
                         </Stack.Navigator>
                     </NavigationContainer>
                 </View>

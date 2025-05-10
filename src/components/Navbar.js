@@ -7,8 +7,6 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
     const scrollY = useRef(new Animated.Value(0)).current;
     const [isScrolled, setIsScrolled] = useState(false);
 
-
-
     useEffect(() => {
         const listener = scrollY.addListener(({ value }) => {
             setIsScrolled(value > 50);
@@ -21,7 +19,7 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
 
     const handleLink = (url) => {
         navigation.navigate(url);
-        setMenuOpen(false); // close menu after navigation
+        setMenuOpen(false);
     };
 
     const [isMobile, setIsMobile] = useState(Dimensions.get('window').width < 768);
@@ -34,7 +32,7 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
         const subscription = Dimensions.addEventListener('change', handleResize);
 
         return () => {
-            subscription?.remove?.(); // remove listener
+            subscription?.remove?.();
         };
     }, []);
 
@@ -58,13 +56,15 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
         >
             <TouchableOpacity onPress={() => handleLink('Home')}>
                 <Image
-                    source={require('../assets/images/Logo2.png')}  // Replace with the path to your logo image
-                    style={[styles.logo, isMobile && styles.logoMobile]}  // Apply styles for the logo
+                    source={require('../assets/images/Logo2.png')}
+                    style={[styles.logo, isMobile && styles.logoMobile]}
                 />
             </TouchableOpacity>
             {isMobile ? (
                 <>
-                    <TouchableOpacity onPress={() => setMenuOpen(!menuOpen)} className="hamburger">
+                    <TouchableOpacity
+                        onPress={() => setMenuOpen(!menuOpen)}
+                        aria-label={menuOpen ? 'Close menu' : 'Open menu'}>
                         <Text style={styles.hamburger}>
                             {menuOpen ? '✗' : '☰'}
                         </Text>
@@ -100,7 +100,6 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
         </Animated.View>
     );
 };
-
 
 const styles = StyleSheet.create({
     navbar: {
@@ -147,17 +146,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         textTransform: 'uppercase',
         letterSpacing: 1,
-
-
     },
-
     hamburger: {
         fontSize: 60,
         color: '#fff',
         paddingHorizontal: 15,
         overflow: "visible"
     },
-
     navItemMobile: {
         fontSize: 45,
         color: '#fff',
@@ -183,7 +178,6 @@ const styles = StyleSheet.create({
         transition: 'transform 0.3s ease, opacity 0.3s ease',
         boxShadow: '0 6px 20px rgba(0, 0, 0, 0.5)',
     },
-
     dropdownItem: {
         color: '#fff',
         fontSize: 22,
@@ -193,12 +187,10 @@ const styles = StyleSheet.create({
         borderBottomColor: 'rgba(255, 255, 255, 0.15)',
         textAlign: 'left',
     },
-
     dropdownItemHover: {
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
         transform: 'scale(1.05)',
     },
-
 });
 
 export default Navbar;
