@@ -300,11 +300,16 @@ const styles = StyleSheet.create({
         marginBottom: 60,
     },
     title: {
-        fontSize: 32,
-        color: '#fff',
+        fontFamily: 'Playfair Display, serif',
+        fontSize: 60,
+        color: 'white',
         fontWeight: 'bold',
         marginBottom: 10,
         textAlign: 'center',
+        fontStyle:'italic',
+        alignSelf: 'center',
+        width: '100%',
+
     },
     form: {
         width: '100%',

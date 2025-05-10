@@ -242,18 +242,21 @@ const styles = StyleSheet.create({
         marginTop: 80,
         padding: 20,
         alignItems: 'center',
-        minHeight: '100vh', // Ensures it fills full height of screen
+        minHeight: '100vh',
 
     },
     title: {
+        fontFamily: 'Playfair Display, serif',
         fontSize: 60,
         color: 'white',
         marginTop: 40,
         marginBottom: 80,
         fontWeight: 'bold',
         textAlign: 'center',
-        alignSelf: 'center',  // Ensures the Text is centered in parent
-        width: '100%',        // Optional: makes sure it spans full width
+        alignSelf: 'center',
+        width: '100%',
+        fontStyle:'italic',
+
     },
     galleryGrid: {
         flexDirection: 'row',
@@ -262,12 +265,15 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     introductionText: {
+        fontFamily: 'Roboto, sans-serif',
         fontSize: 40,
-        color: 'white',
+        color: 'rgba(255, 255, 255, 0.8)',
         marginBottom: 40,
         textAlign: 'center',
         paddingHorizontal: 20,
         lineHeight: 60,
+        fontWeight: 'normal',
+
     },
     linetest: {
         width: '60%',
@@ -281,7 +287,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         margin: 40,
         borderColor: 'white',
-        transition: 'border 0.3s ease', // Smooth transition for the border
+        transition: 'border 0.3s ease',
         border: '5px solid white',
 
     },
@@ -399,12 +405,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     socialMediaText: {
-        color: 'white',
+        color: 'rgba(255, 255, 255, 0.8)',  // White with slight transparency
         fontSize: 32,
         marginRight: 10,
+        lineHeight: '1.5',
+
     },
     socialMediaTextMobile: {
         fontSize: 26,
+        color: 'rgba(255, 255, 255, 0.8)',
+        lineHeight: '1.5',
+
     },
     socialMedia: {
         flexDirection: 'row',
@@ -413,13 +424,13 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         marginLeft: 10,
-        marginRight: 15, // Adjust space between icons as needed
+        marginRight: 15,
 
     },
     iconMobile: {
         width: 55,
         height: 55,
-        marginRight: 15, // Adjust space between icons as needed
+        marginRight: 15,
 
     },
 

@@ -11,7 +11,6 @@ const Footer = () => {
         Linking.openURL(url);
     };
 
-    // Check if the device is mobile (you can adjust the breakpoint as needed)
     const isMobile = width < 768;
 
     return (
@@ -30,9 +29,7 @@ const Footer = () => {
                 </View>
 
 
-                {/* Social Media and Contact in Same Line */}
                 <View style={styles.socialMediaContactContainer}>
-                    {/* Social Media */}
                     <View style={styles.socialMediaContainer}>
                         <Text style={[styles.socialMediaText, isMobile ? styles.socialMediaTextMobile : null]}>Na ndjekni edhe në:</Text>
                         <View style={styles.socialMedia}>
@@ -45,7 +42,6 @@ const Footer = () => {
                         </View>
                     </View>
 
-                    {/* Contact */}
                     <View style={styles.contactContainer}>
                         <Text style={[styles.contactText, isMobile ? styles.contactTextMobile : null]}>Na kontaktoni në:</Text>
                         <TouchableOpacity onPress={() => handleSocialMediaPress('https://wa.me/+38970751551')}>
@@ -57,7 +53,6 @@ const Footer = () => {
                     </View>
                 </View>
 
-                {/* Line above Copyright, Inline with Quick Links */}
                 <View style={styles.lineContainer}>
                     <View style={styles.line}></View>
                 </View>
@@ -76,9 +71,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
     },
-
     footer: {
-
         width: '100%',
         backgroundColor: '#000',
         paddingVertical: 10,
@@ -97,22 +90,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         marginBottom: 20,
     },
-
     companyName: {
+        fontFamily: 'Sansation, sans-serif', // 👈 Add this line
         color: '#fff',
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
         justifyContent:'center',
         marginBottom: 10,
-
-
     },
     companyNameMobile: {
+        fontFamily: 'Sansation, sans-serif', // 👈 Add this line
         fontSize: 32,
     },
-
-
     socialMediaContactContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -123,7 +113,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 20,  // Added some space between social media and contact
+        marginRight: 20,
     },
     contactContainer: {
         flexDirection: 'row',
@@ -155,8 +145,8 @@ const styles = StyleSheet.create({
     contactText: {
         color: '#fff',
         fontSize: 16,
-        fontWeight: 'bold',
         marginRight: 10,
+        fontWeight: 'bold',
     },
     contactTextMobile: {
         fontSize: 18,
@@ -183,25 +173,32 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     copyrightText: {
-        color: '#fff',
+        color: 'rgba(255, 255, 255, 0.8)',
         fontSize: 16,
-        fontWeight: 'normal',
+        fontWeight: '800',
         textAlign: 'center',
-
+        fontFamily: 'Roboto, sans-serif',
+    },
+    copyrightTextMobile: {
+        color: 'rgba(255, 255, 255, 0.8)',
+        fontSize: 20,
+        fontWeight: '800',
+        textAlign: 'center',
+        fontFamily: 'Roboto, sans-serif',
     },
     headerContainer: {
-        flexDirection: 'row',  // Align the company name and address in a row
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '100%', // Ensure it takes full width to position correctly
-
-        marginBottom: 10,  // Add space below the header
+        width: '100%',
+        marginBottom: 10,
     },
     addressText: {
+        fontFamily: 'Sansation, sans-serif',
         fontSize: 18,
-        color: '#fff',
+        color: 'rgba(255, 255, 255, 0.8)',
         fontWeight: '300',
-        marginLeft: 20, // Adds space between the company name and address
+        marginLeft: 20,
 
     },
 

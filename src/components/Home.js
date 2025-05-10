@@ -1,7 +1,7 @@
 import React, {useRef, useState, useEffect} from 'react';
-import {Animated, Dimensions, Linking, Pressable, ScrollView, StatusBar, StyleSheet} from 'react-native';
+import {Animated, Dimensions, Linking, Pressable, ScrollView, StyleSheet} from 'react-native';
 import { Text } from 'react-native';
-import {View, SafeAreaView, Image} from 'react-native';
+import {View, Image} from 'react-native';
 
 import Footer from "./Footer";
 import BackgroundPhoto from './BackgroundPhoto'
@@ -17,8 +17,6 @@ const Home = () => {
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
     const testimonialScrollViewRef = useRef(null);
 
-    const [showLabel, setShowLabel] = useState(false);
-
     const openLink = (url ) =>{
       Linking.openURL(url);
     };
@@ -28,10 +26,8 @@ const Home = () => {
             setWindowWidth(Dimensions.get('window').width);
         };
 
-        // Add event listener
         window.addEventListener('resize', handleResize);
 
-        // Clean up
         return () => {
             window.removeEventListener('resize', handleResize);
         };
@@ -46,7 +42,7 @@ const Home = () => {
 
     const scrollToTestimonial = (index) => {
         if (testimonialScrollViewRef.current) {
-            const scrollAmount = width * 0.8; // Adjust this value based on your testimonial width
+            const scrollAmount = width * 0.8;
             testimonialScrollViewRef.current.scrollTo({
                 x: index * scrollAmount,
                 animated: true
@@ -74,7 +70,7 @@ const Home = () => {
         const handleKeyDown = (e) => {
             if (e.key === 'ArrowLeft' && currentTestimonialIndex > 0) {
                 scrollToTestimonial(currentTestimonialIndex - 1);
-            } else if (e.key === 'ArrowRight' && currentTestimonialIndex < 4) { // Assuming 5 testimonials
+            } else if (e.key === 'ArrowRight' && currentTestimonialIndex < 4) {
                 scrollToTestimonial(currentTestimonialIndex + 1);
             }
         };
@@ -86,11 +82,10 @@ const Home = () => {
     }, [currentTestimonialIndex]);
 
     const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
-    const iconSize = screenWidth > 600 ? 60 : 80; // Larger icons for PC, smaller for mobile
+    const iconSize = screenWidth > 600 ? 60 : 80;
+    const [clicked, setClicked] = useState(false);
 
-    const [clicked, setClicked] = useState(false); // To track the click
 
-    // Update the screen width on orientation change
     useEffect(() => {
         const onChange = (e) => setScreenWidth(e.window.width);
 
@@ -98,45 +93,39 @@ const Home = () => {
         return () => Dimensions.removeEventListener('change', onChange);
     }, []);
 
-    // Function to handle clicks
     const handlePress = () => {
         if (!clicked) {
-            setClicked(true);    // Set clicked to true so the next click will go to the link
+            setClicked(true);
         }
     };
 
     const [scaleInstagram] = useState(new Animated.Value(1));
     const [scaleFacebook] = useState(new Animated.Value(1));
 
-
-    // Handle press down to animate scale for Instagram
     const handlePressInInstagram = () => {
         Animated.spring(scaleInstagram, {
-            toValue: 1.5, // Slightly shrink the Instagram icon
+            toValue: 1.5,
             useNativeDriver: true,
         }).start();
     };
 
-    // Handle press out to return Instagram to normal scale
     const handlePressOutInstagram = () => {
         Animated.spring(scaleInstagram, {
-            toValue: 1, // Return to normal size
+            toValue: 1,
             useNativeDriver: true,
         }).start();
     };
 
-    // Handle press down to animate scale for Facebook
     const handlePressInFacebook = () => {
         Animated.spring(scaleFacebook, {
-            toValue: 1.5, // Slightly shrink the Facebook icon
+            toValue: 1.5,
             useNativeDriver: true,
         }).start();
     };
 
-    // Handle press out to return Facebook to normal scale
     const handlePressOutFacebook = () => {
         Animated.spring(scaleFacebook, {
-            toValue: 1, // Return to normal size
+            toValue: 1,
             useNativeDriver: true,
         }).start();
     };
@@ -161,20 +150,14 @@ const Home = () => {
 
     const styles = StyleSheet.create({
         container: {
-
-            userSelect: 'none', // For web environments
-
-            // minHeight: "100vh",
+            userSelect: 'none',
             backgroundColor: "black",
-            // position: 'relative'
         },
-
         bgContainer: {
             width: '100%',
             position: 'relative',
-            zIndex: -1, // Ensure background is behind navbar and other content
+            zIndex: -1,
         },
-
         cardContainer: {
             padding: width > 768 ? 40 : 20,
             flexDirection: width > 768 ? 'row' : 'column',
@@ -188,8 +171,7 @@ const Home = () => {
             zIndex: 1,
             maxWidth: width > 768 ? 1600 : '100%',
             marginHorizontal: 'auto',
-            userSelect: 'none', // For web environments
-
+            userSelect: 'none',
         },
         cardBackground: {
             position: 'absolute',
@@ -212,8 +194,7 @@ const Home = () => {
             shadowOffset: {
                 width: 0,
                 height: 2,
-                userSelect: 'none', // For web environments
-
+                userSelect: 'none',
             },
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
@@ -225,8 +206,7 @@ const Home = () => {
             alignItems: 'center',
             alignSelf: 'center',
             position: 'relative',
-            userSelect: 'none', // For web environments
-
+            userSelect: 'none',
         },
         cardArrow: {
             position: 'absolute',
@@ -239,8 +219,7 @@ const Home = () => {
             zIndex: 2,
             flexDirection: 'row',
             alignItems: 'center',
-            userSelect: 'none', // For web environments
-
+            userSelect: 'none',
         },
         clickMeText: {
             position: 'absolute',
@@ -251,8 +230,7 @@ const Home = () => {
             fontStyle: 'italic',
             opacity: 0.8,
             transition: 'all 0.4s ease-in-out',
-            userSelect: 'none', // For web environments
-
+            userSelect: 'none',
         },
         activeCardArrow: {
             transform: [{rotate: '225deg'}],
@@ -279,8 +257,7 @@ const Home = () => {
             textAlign: 'center',
             width: '100%',
             transition: 'color 0.4s ease-in-out',
-            userSelect: 'none', // For web environments
-
+            userSelect: 'none',
         },
         cardText: {
             fontSize: width > 768 ? 20 : 24,
@@ -292,15 +269,13 @@ const Home = () => {
             paddingHorizontal: width > 768 ? 0 : 10,
             width: '100%',
             maxWidth: '90%',
-            userSelect: 'none', // For web environments
-
+            userSelect: 'none',
         },
         activeCardTitle: {
             color: '#ffffff',
             fontSize: width > 768 ? 32 : 36,
             textAlign: 'center',
-            userSelect: 'none', // For web environments
-
+            userSelect: 'none',
         },
         activeCardText: {
             color: '#e0e0e0',
@@ -308,10 +283,10 @@ const Home = () => {
             lineHeight: width > 768 ? 32 : 40,
             textAlign: 'center',
             maxWidth: '90%',
-            userSelect: 'none', // For web environments
-
+            userSelect: 'none',
         },
         regularText: {
+            fontFamily: 'Roboto, sans-serif',
             fontSize: 40,
             fontWeight: 'bold',
             fontStyle: 'italic',
@@ -321,13 +296,11 @@ const Home = () => {
             marginBottom: 40,
             textAlign: 'center',
             letterSpacing: 0.3,
-            userSelect: 'none', // For web environments
+            userSelect: 'none',
             flexWrap: 'wrap',
             maxWidth: '80%',
             alignSelf: 'center'
-
         },
-
         testimonialSection: {
             padding: windowWidth > 770 ? 100 : 40,
             backgroundColor: 'transparent',
@@ -350,13 +323,14 @@ const Home = () => {
             cursor: 'grab',
         },
         sectionTitle: {
+            fontFamily: 'Playfair Display, serif',
+            fontStyle: 'italic',
             fontSize: width > 768 ? 48 : 36,
             color: '#333333',
             textAlign: 'center',
             marginBottom: width > 768 ? 60 : 80,
             fontWeight: '700',
             letterSpacing: 1.2,
-
         },
         testimonialScrollContainer: {
             paddingHorizontal: width > 768 ? 80 : 40,
@@ -397,7 +371,6 @@ const Home = () => {
             letterSpacing: 0.8,
             maxWidth: width > 768 ? '85%' : '90%',
             alignSelf: 'center',
-
         },
         testimonialAuthor: {
             fontSize: width > 768 ? 24 : 18,
@@ -406,14 +379,12 @@ const Home = () => {
             fontWeight: '600',
             marginBottom: width > 768 ? 12 : 8,
             letterSpacing: 1,
-
         },
         testimonialDate: {
             fontSize: width > 768 ? 18 : 14,
             color: 'rgba(255, 255, 255, 0.7)',
             textAlign: 'center',
             letterSpacing: 0.5,
-
         },
         statsSection: {
             flexDirection: width > 768 ? 'row' : 'column',
@@ -422,18 +393,15 @@ const Home = () => {
             padding: width > 768 ? 100 : 60,
             gap: 60,
         },
-
         statItem: {
             alignItems: 'center',
         },
-
         statNumber: {
             fontSize: width > 768 ? 60 : 48,
             color: '#ffffff',
             fontWeight: 'bold',
             marginBottom: 15,
         },
-
         statLabel: {
             fontSize: width > 768 ? 22 : 20,
             color: 'rgba(255, 255, 255, 0.7)',
@@ -444,10 +412,9 @@ const Home = () => {
             bottom: 20,
             left: 0,
             right: 0,
-            flexDirection: 'row', // <-- image and text side by side
+            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-
         },
 
         swipeMeText: {
@@ -455,12 +422,10 @@ const Home = () => {
             fontSize: width > 768 ? 32 : 36,
             color: '#333333',
             fontStyle: 'italic',
-            marginLeft: 10, // space between image and text
-
+            marginLeft: 10,
         },
-
         iphoneIcon: {
-            width: 40, // or whatever size you want
+            width: 40,
             height: 40,
             resizeMode: 'contain',
         },
@@ -486,6 +451,7 @@ const Home = () => {
             marginBottom: windowWidth > 768 ? 60 : 50,
             fontWeight: '700',
             letterSpacing: 1.2,
+            fontFamily: 'Sansation, sans-serif',
         },
         bulletPointsContainer: {
             flexDirection: windowWidth > 770 ? 'row' : 'column',
@@ -555,7 +521,6 @@ const Home = () => {
             backdropFilter: 'blur(50px)',
             webkitBackdropFilter: 'blur(50px)',
         },
-
         iconContainer: {
             flexDirection: 'row',
             gap: 15,
@@ -573,15 +538,13 @@ const Home = () => {
             justifyContent: 'center',
         },
         text: {
+            color: 'rgba(255, 255, 255, 0.8)',
             fontSize: 28,
             fontWeight: 'bold',
             textAlign: 'center',
-            color: '#ffffff',
             marginRight: 30,
             fontStyle: 'italic',
-
         },
-
         blurOverlay:{
             position: 'absolute',
             top: 0,
@@ -591,13 +554,11 @@ const Home = () => {
             backgroundColor: 'rgba(255,255,255,0.9)',
             zIndex: -1,
             filter: 'blur(100px)',
-
         },
     });
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
-
-
             <View style={styles.bgContainer}>
                 <BackgroundPhoto />
             </View>
@@ -645,11 +606,7 @@ const Home = () => {
                 </View>
             </Pressable>
 
-
-
-
             <View style={styles.cardContainer}>
-
                 <View style={styles.cardBackground} />
                 <View
                     style={[
@@ -735,7 +692,7 @@ const Home = () => {
 
             <View style={styles.whyUsSection}>
                 <View style={styles.whyUsWrapper}>
-                    <Text style={styles.whyUsTitle}>Pse Beart Photography?</Text>
+                    <Text style={styles.whyUsTitle}>Pse Beart Production?</Text>
                     <View style={styles.bulletPointsContainer}>
 
                         <View style={styles.bulletPoint}>
@@ -828,8 +785,6 @@ const Home = () => {
                 </View>
             </View>
 
-
-
             <View style={styles.testimonialSection}>
                 <View style={styles.testimonialWrapper}>
                     <Text style={styles.sectionTitle}>Client Love Stories</Text>
@@ -903,8 +858,6 @@ const Home = () => {
                 </View>
             </View>
 
-
-
             <Text style={styles.regularText}>
                 Krijojmë momente të paharrueshme. Rezervoni takimin tuaj sot..
             </Text>
@@ -922,9 +875,6 @@ const Home = () => {
                     <Text style={styles.statLabel}>Lokacione të Besuara</Text>
                 </View>
             </View>
-
-
-
             <Footer />
         </ScrollView>
     );

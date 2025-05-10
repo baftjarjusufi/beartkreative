@@ -2,17 +2,11 @@ import React from 'react';
 import {View, StyleSheet, Dimensions,Image, ImageBackground, Text, Linking, TouchableOpacity} from 'react-native';
 
 const { width, height } = Dimensions.get('window');
-import whatsappIcon from '../assets/images/whatsapp-icon.png';
 import { useState } from 'react';
-
-import fbIcon from '../assets/images/facebook-icon.png';  // Facebook icon
-import igIcon from '../assets/images/Instagram-icon.png';  // Instagram icon
-
-
 
 
 const BackgroundPhoto = () => {
-    const [hovered, setHovered] = useState(false); // State to handle hover effect
+    const [hovered, setHovered] = useState(false);
 
     const disableSave = (e) => {
         e.preventDefault();
@@ -21,14 +15,13 @@ const BackgroundPhoto = () => {
         Linking.openURL('whatsapp://send?phone=+38970751551');
     };
 
-
     return (
         <ImageBackground
             source={require('../assets/images/bg-photos.jpeg')}
             style={styles.bgPhoto}
             resizeMode="cover"
-            onContextMenu={disableSave} // disables right-click on image
-            onTouchStart={disableSave} // disables long touch on mobile
+            onContextMenu={disableSave}
+            onTouchStart={disableSave}
         >
             <View style={styles.overlay}>
                 <View style={styles.textContainer}>
@@ -37,16 +30,15 @@ const BackgroundPhoto = () => {
                     <Text style={styles.subText}>Production</Text>
                     <Text style={styles.description}>Capturing life's most precious moments with artistry and passion... </Text>
 
-
                     <TouchableOpacity
                         onPress={() => handleWhatsApp('https://wa.me/+38970751551')}
-                        style={[styles.whatsappButton, hovered && styles.whatsappButtonHovered]} // Conditionally apply hover styles
-                        onMouseEnter={() => setHovered(true)}  // When the mouse enters, set hover to true
-                        onMouseLeave={() => setHovered(false)} // When the mouse leaves, set hover to false
+                        style={[styles.whatsappButton, hovered && styles.whatsappButtonHovered]}
+                        onMouseEnter={() => setHovered(true)}
+                        onMouseLeave={() => setHovered(false)}
                     >
                         <Image
-                            source={require('../assets/images/whatsapp-icone.png')} // Add the image source here
-                            style={styles.whatsappIcon} // Set the style for the image
+                            source={require('../assets/images/whatsapp-icone.png')}
+                            style={styles.whatsappIcon}
                         />
 
                         <Text style={styles.whatsappButtonText}>{'Whatsapp +38970751551'}</Text>
@@ -81,18 +73,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         maxWidth: '100%',
         padding: 20,
-        userSelect: 'none', // For web environments
-
+        userSelect: 'none',
     },
     mainText: {
         color: '#fff',
         fontSize: width > 768 ? 112 : 100,
-        fontWeight: '300',
+        fontWeight: '400',
         textAlign: 'center',
         letterSpacing: 8,
         marginBottom: 10,
-        userSelect: 'none', // For web environments
-
+        userSelect: 'none',
+        fontFamily: 'Sansation, sans-serif',
+        fontStyle: 'normal',
     },
     line: {
         width: width > 768 ? 200 : 150,
@@ -103,23 +95,24 @@ const styles = StyleSheet.create({
     subText: {
         color: '#fff',
         fontSize: width > 768 ? 36 : 34,
-        fontWeight: '300',
+        fontWeight: '600',
         textAlign: 'center',
         letterSpacing: 4,
         marginBottom: 20,
-        userSelect: 'none', // For web environments
-
+        userSelect: 'none',
+        fontFamily: 'Roboto Serif, serif',
     },
     description: {
         color: 'rgba(255, 255, 255, 0.8)',
         fontSize: width > 768 ? 32 : 30,
         textAlign: 'center',
-        lineHeight: 28,
+        lineHeight: 32,
         letterSpacing: 1,
         maxWidth: width > 768 ? '60%' : '80%',
-        userSelect: 'none', // For web environments
+        userSelect: 'none',
         marginBottom: 20,
-
+        fontFamily: 'Playfair Display, serif',
+        fontWeight:"600",
     },
     // WhatsApp Button Styles
     whatsappButton: {
@@ -132,8 +125,7 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         paddingHorizontal: 40,
         borderRadius: 50,
-        transition: 'all 0.3s ease',  // Smooth transition for hover effect
-
+        transition: 'all 0.3s ease',
     },
     whatsappButtonText: {
         color: 'white',
@@ -142,20 +134,19 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     whatsappIcon: {
-        width: 40, // Adjust the size of the icon
-        height: 40, // Adjust the size of the icon
+        width: 40,
+        height: 40,
     },
     // Hovered Button Styles
     whatsappButtonHovered: {
-        transform: 'scale(1.3)',  // Scale the button up when hovered
-        backgroundColor: 'rgba(255, 255, 255, 0.1)', // Slight background change on hover
-        shadowColor: '#000', // Shadow color
-        shadowOffset: { width: 0, height: 15 }, // Shadow position
-        shadowOpacity: 0.5, // Shadow opacity
-        shadowRadius: 15, // Shadow blur radius
-        elevation: 15, // For Android devices
+        transform: 'scale(1.3)',
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 15 },
+        shadowOpacity: 0.5,
+        shadowRadius: 15,
+        elevation: 15,
     },
-
 });
 
 export default BackgroundPhoto
